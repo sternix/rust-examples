@@ -79,3 +79,73 @@ Raw pointers
 - lifetime yok
 
 ---------8<--------------------------
+
+cargo run --features x,y,z
+
+// kodda ifdef gibi conditional kod yazabiliriz
+if cfg!(feature = "x") {
+
+}
+
+cargo build --release --features 'xyz'
+
+---------8<--------------------------
+
+serde için
+
+pub struct PageNewKisi {
+    adi: String,
+    soyadi: String,
+    #[serde(skip_deserializing)]
+    err_adi: bool,
+    #[serde(skip_deserializing)]
+    err_adi_message: String,
+    #[serde(skip_deserializing)]
+    err_soyadi: bool,
+    #[serde(skip_deserializing)]
+    err_soyadi_message: String,
+    btn: String,
+}
+
+---------8<--------------------------
+
+0usize
+0_usize
+0_i32
+0_u32
+0_u8
+
+değerden tip vermek
+
+---------8<--------------------------
+
+assert_eq!(x,y,"oh no");
+
+anlamına geliyor
+
+if x != y {
+    panic("assertion {} == {} failed",x,y);
+}
+
+---------8<--------------------------
+
+#[cfg(test)] // only compiles in test mode
+...
+
+#[test] // this function is a test
+fn it_works() {
+    assert!(true); // if this function panics, test fails
+}
+
+rustc --test testing.rs
+this tells rustc to compile your tests and replaces main function with a test runner
+try it out ./testing
+
+---------8<--------------------------
+
+r"str" => raw string
+b"str" => byte string
+b'c' => byte char
+br#"hello"# => raw byte string
+
+---------8<--------------------------

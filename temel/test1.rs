@@ -5,5 +5,6 @@ fn math_works() {
     assert_eq!(x + 1, 2);
 }
 
-// rustc --test abc.rs
+// rustc --test test1.rs
+// proje için
 // cargo test

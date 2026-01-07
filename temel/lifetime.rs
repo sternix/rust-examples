@@ -1,5 +1,5 @@
 // lifetime'lar illa 'a 'b olmasına gerek yok
-// fakat aski bir kelime olmalı
+// fakat ascii bir kelime olmalı
 // küçük harflerden oluşması önerilir - uyarı veriyor
 
 fn fn_a<'tr>(i: &'tr i32) -> &'tr i32 {
@@ -7,7 +7,7 @@ fn fn_a<'tr>(i: &'tr i32) -> &'tr i32 {
 }
 
 trait T<'ankara> {
-    fn x(&self, &'ankara i32) -> &'ankara i32;
+    fn x(&self, _: &'ankara i32) -> &'ankara i32;
 }
 
 struct S;
