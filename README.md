@@ -1,6 +1,8 @@
 # rust-examples
 
 ### Yararlanılan kaynaklar
+[https://doc.rust-lang.org/book/](https://doc.rust-lang.org/book/)
+
 [https://rustbyexample.io/](https://rustbyexample.io/)
 
 [https://www.programiz.com/rust](https://www.programiz.com/rust)
@@ -12,3 +14,5 @@
 [https://learning-rust.github.io/docs/overview/](https://learning-rust.github.io/docs/overview/)
 
 [https://stevedonovan.github.io/rust-gentle-intro](https://stevedonovan.github.io/rust-gentle-intro)
+
+[https://dev.to/dandyvica/yarit-yet-another-rust-iterators-tutorial-46dk](https://dev.to/dandyvica/yarit-yet-another-rust-iterators-tutorial-46dk)

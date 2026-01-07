@@ -256,3 +256,11 @@ byte diye bir tip yok onun yerine -> u8
 &[T] : Reference to slice
 
 ---------8<--------------------------
+
+iterate: yinelemek, tekrarlamak
+
+iterator: yenileyici, tekrarlayıcı
+
+iterator: In computer science, an iterator is an object that allows a programmer to traverse through all the elements of a collection, regardless of its specific implementation. An iterator is sometimes called a cursor, especially within the context of a database
+
+---------8<--------------------------
