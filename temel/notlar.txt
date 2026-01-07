@@ -1,3 +1,67 @@
+---------8<--------------------------
+
+Variable =  is an identifier used to refer memory location in computer memory that holds a value for that variable
+When you create a variable in Rust, this means you are allocating some space in the memory for that variable.
+
+Rust'da değişkenler
+let <name>;
+let <name> = <value>;
+let <name> : <type>;
+let <name> : <type> = <value>;
+
+şekillerinde tanımlanabilir
+
+---------8<--------------------------
+
+Type Inference
+
+let a = 123;
+a'nın tipi i32
+
+let b = "xyz"
+b'nin tipi &str
+
+---------8<--------------------------
+
+trait: behavior, davranış, a trait represents a capabilitity, something a type can do
+
+---------8<--------------------------
+
+The type [T;N] represents an array of N values, each of type T.
+An arrays's size is a constant determined at compile time, and is part of the type.
+you can't append new elements or shrink an array.
+
+---------8<--------------------------
+
+her fonksiyonun bildirilmese bile bir dönüş tipi var,
+eğer bir tip bildirilmezse -> () şeklinde
+() : Unit yada Empty Tuple, Unit Type:
+This is traditionally called the Unit Type because it has only one value also written (). Rust uses the unit type where there's no meaningful value to carry. For example, a function that returns no value has a return type of ().
+
+---------8<--------------------------
+
+Return type
+Result<(), std::io::Error>
+meaning that the function returns a std::io::Error value if something goes wrong,
+but returns no value on success
+
+---------8<--------------------------
+
+pretty print
+
+println!("{:#?}", res);
+
+---------8<--------------------------
+
+let array = [1,2,3]
+let tuple = (1,'a',true);
+let slice = array[1..2];
+
+Slice = Memory view of an array
+Tuple = Ordered sequence of comma-separated values
+
+---------8<--------------------------
+
 const tanımlarken tiplerini mutlaka bildirmeliyiz
 const her scope'da tanımlanabilir.
 

@@ -8,3 +8,5 @@
 [https://github.com/BruceEckel/rust-experiments](https://github.com/BruceEckel/rust-experiments)
 
 [https://github.com/holgertkey/100-days-of-code/tree/master/Round1](https://github.com/holgertkey/100-days-of-code/tree/master/Round1)
+
+[https://learning-rust.github.io/docs/overview/](https://learning-rust.github.io/docs/overview/)
