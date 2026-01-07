@@ -1,5 +1,5 @@
 # rust-examples
 
-Bazı örnekleri 
+### Yararlanılan kaynaklar
 [https://rustbyexample.io/](https://rustbyexample.io/)
-sitesinden aldım
+

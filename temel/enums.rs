@@ -21,7 +21,6 @@ impl Animal {
     }
 }
 
-//fn print_animal(animal: &Animal) {
 fn print_animal(animal: &Animal) {
     println!("Adı : {}, yaşı: {}", animal.name(), animal.age())
 }

@@ -1,13 +1,10 @@
 // https://gist.github.com/jeremychone/34d1e3daffc38eb602b1a9ab21298d10
 
 /*
-
 [dependencies]
 sqlx = { version = "0.8.0", features = ["runtime-tokio-native-tls", "postgres", "uuid", "chrono", "migrate","macros"] }
 tokio = { version = "1.39.2", features = ["full"] }
-
 */
-
 
 use sqlx::postgres::{PgPoolOptions, PgRow};
 use sqlx::{FromRow, Row};

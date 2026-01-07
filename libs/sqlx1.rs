@@ -1,8 +1,6 @@
 /*
-
 cargo add sqlx --features runtime-tokio-native-tls,postgres,uuid,chrono,migrate
 cargo add tokio --features full
-
 */
 
 use sqlx::postgres::PgPoolOptions;
