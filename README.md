@@ -10,3 +10,5 @@
 [https://github.com/holgertkey/100-days-of-code/tree/master/Round1](https://github.com/holgertkey/100-days-of-code/tree/master/Round1)
 
 [https://learning-rust.github.io/docs/overview/](https://learning-rust.github.io/docs/overview/)
+
+[https://stevedonovan.github.io/rust-gentle-intro](https://stevedonovan.github.io/rust-gentle-intro)

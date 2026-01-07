@@ -149,3 +149,50 @@ b'c' => byte char
 br#"hello"# => raw byte string
 
 ---------8<--------------------------
+
+while let Some(stream) = incoming.next() {
+    .... None olanlara bakmıyor gelenlerden Some olanlara bakıyor
+}
+
+---------8<--------------------------
+
+normalde derleyici fonksiyon isimlerini değiştiriyor
+değiştirmemesi için
+
+#[no_mangle]
+pub extern "C" fn_start() -> ! {
+    loop{}
+}
+
+#![no_std] // don't link the rust standard library
+#![no_main] // disable all rust level entry points
+
+---------8<--------------------------
+
+mut = mutability = write + ability
+
+---------8<--------------------------
+
+tüm operatörler bir trait'e bakıyor
+
++=
+std::ops::AddAssign
+
++
+std::ops::Add
+
+---------8<--------------------------
+
+The relationship between Rust arrays and slices is similar to that between C arrays and pointers, except for two important differences - Rust slices keep track of their size (and will panic if you try to access outside that size) and you have to explicitly say that you want to pass an array as a slice using the & operator.
+
+A C programmer pronounces & as 'address of'; a Rust programmer pronounces it 'borrow'. This is going to be the key word when learning Rust. Borrowing is the name given to a common pattern in programming; whenever you pass something by reference (as nearly always happens in dynamic languages) or pass a pointer in C. Anything borrowed remains owned by the original owner.
+
+---------8<--------------------------
+
+This is a neat notation which looks similar to Python slices but with a big difference: a copy of the data is never made. These slices all borrow their data from their arrays.
+
+Slices give you different views of the same array.
+A copy of data is never made, these slices all borrow
+their data from their arrays.
+
+---------8<--------------------------

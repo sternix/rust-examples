@@ -21,7 +21,7 @@ fn main() {
     let (e, _, _, _, f) = a; //e = 1, f = "Hello, world!", _ indicates not interested of that item
 
     let g = (0,); //single-element tuple
-                  // eğer virgülü koymazsak int değişkeni olarak değiştirin diye uyarıyor
+    // eğer virgülü koymazsak int değişkeni olarak değiştirin diye uyarıyor
 
     let h = (b, (2, 4), 5); //((1, 1.5), (2, 4), 5)
 

@@ -4,9 +4,9 @@ fonksiyonun hata vermesi test'in başarılı olduğu anlamına gelebilir
 */
 
 #[test]
-#[should_panic(expected="divide by zero")]
+#[should_panic(expected = "divide by zero")]
 fn test_xyz() {
     let a = 1;
-    let b = 0; 
+    let b = 0;
     println!("{}", a / b);
 }
