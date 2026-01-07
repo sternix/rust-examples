@@ -7,6 +7,7 @@ fn main() {
     let first_name = "Jack";
 
     // bu hata vermiyor fakat iki değişken olarak görülüyor
+    // format ile 's@lary' -> 's @ lary' olarak değiştiriliyor
     let s @ lary = 52352;
 
     /*

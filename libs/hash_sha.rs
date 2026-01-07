@@ -1,7 +1,5 @@
 /*
-cargo add base16ct
-cargo add sha2
-cargo add sha256
+cargo add base16ct sha2 sha256
 */
 
 /*
