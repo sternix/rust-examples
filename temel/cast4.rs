@@ -4,5 +4,5 @@ fn main() {
     assert_eq!('*'.is_alphabetic(), false);
     assert_eq!('8'.to_digit(10), Some(8));
     assert_eq!('x'.len_utf8(), 1);
-    assert_eq!(std::char::from_digit(2,10), Some('2'));
+    assert_eq!(std::char::from_digit(2, 10), Some('2'));
 }

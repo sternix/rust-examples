@@ -5,7 +5,7 @@ fn main() {
     // 26 - 14
 
     for c in s.chars() {
-        print!("{} ",c);
+        print!("{} ", c);
     }
     println!("");
 }

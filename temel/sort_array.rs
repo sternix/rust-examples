@@ -10,4 +10,3 @@ fn main() {
     a.sort();
     assert_eq!(a, [1, 2, 3, 4, 5]);
 }
-

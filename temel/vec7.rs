@@ -5,7 +5,7 @@ fn main() {
     println!("len: {}, cap: {} ", v.len(), v.capacity());
 
     let mut v = Vec::new(); // tip daha belli değil
-                            // ilk ekleyeceğimiz tipteki değer Vec'in tipi oluyor
+    // ilk ekleyeceğimiz tipteki değer Vec'in tipi oluyor
     v.push("test");
     // v.push(10);
     // ^^ expected &str, found integer
@@ -26,7 +26,7 @@ fn main() {
     assert_eq!(v, [4, 3, 2, 1, 0]);
 
     v.insert(3, 30); // index sıfırdan başlıyor, yani 1'in yerine
-                     // eklenecek 1 ötelenerek 4. eleman olacak
+    // eklenecek 1 ötelenerek 4. eleman olacak
     assert_eq!(v, [4, 3, 2, 30, 1, 0]);
     v.remove(3);
     assert_eq!(v, [4, 3, 2, 1, 0]);

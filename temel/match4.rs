@@ -1,9 +1,5 @@
 fn good_or_bad(good: bool) -> Result<i32, String> {
-    if good {
-        Ok(42)
-    } else {
-        Err("Bad".to_string())
-    }
+    if good { Ok(42) } else { Err("Bad".to_string()) }
 }
 
 fn main() {

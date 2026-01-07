@@ -1,5 +1,5 @@
 fn main() {
-    let mut v1 = vec![1,10,5,1,2,11,2,40];
+    let mut v1 = vec![1, 10, 5, 1, 2, 11, 2, 40];
     v1.sort();
 
     // sort işlemi gerekli
@@ -9,5 +9,5 @@ fn main() {
     // eğer orjinal vectör'deki elemanlara ihtiyaç varsa clone()
     // ile yedeğini almalıyız.
     v1.dedup();
-    assert_eq!(v1, &[1,2,5,10,11,40]);
+    assert_eq!(v1, &[1, 2, 5, 10, 11, 40]);
 }
