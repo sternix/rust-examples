@@ -1,0 +1,17 @@
+const tanımlarken tiplerini mutlaka bildirmeliyiz
+const her scope'da tanımlanabilir.
+
+---------8<--------------------------
+
+Raw pointers
+
+*const T
+* mut T
+
+- unsafe
+- gösterdikleri hafıza null olabilir
+- otomatik drop yapmazlar
+- ownership yok
+- lifetime yok
+
+---------8<--------------------------
