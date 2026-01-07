@@ -237,3 +237,22 @@ int tüm int tipleri
 enum enum'un tüm değerleri vs
 
 ---------8<--------------------------
+
+Eğer debug buildde integer overflow olursa program panic'liyor,
+fakat release build'de sayı başa dönüyor, ör: u8'de 256 -> 0, 257 -> 1 değerini alıyor.
+
+---------8<--------------------------
+
+byte diye bir tip yok onun yerine -> u8
+
+---------8<--------------------------
+
+&T : immutable reference like const T* in C
+&mut T : mutable reference like T* in C
+
+---------8<--------------------------
+
+[T] : Slice
+&[T] : Reference to slice
+
+---------8<--------------------------
