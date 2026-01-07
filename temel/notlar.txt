@@ -196,3 +196,44 @@ A copy of data is never made, these slices all borrow
 their data from their arrays.
 
 ---------8<--------------------------
+
+Panic happens when the original problem happens, not when the program has become hopelessly confused
+and eaten all your homework. Panics are memory safe because they happen before any illegal access to memory.
+This is a common cause of security problems in C, because all memory accesses are unsafe and a cunning attacher can
+expoit this weakness.
+
+Panicking sounds desperate and unplanned, but Rust panics are structured, the stack is unwound just aswith exceptions.
+All allocated objects are dropped and a backtrace is generated.
+
+!!!!
+illegal bir pointer işleminde İşletim sistemi kendini korumak için Segfault hataları verir.
+eğer bu hatayı vermez ise işletim sistemi göçme ile yüzyüze kalabilir. fakat bu en son noktadır.
+eğer program içinde illegal bir işlem olduğu anlaşılırsa program işletim sistemine gerek kalmadan
+kendini sonlandırabilir bu işleme panic diyoruz.
+
+---------8<--------------------------
+
+"hello" => &str => string slice => const char *
+"hello".to_string() => String => String nesnesi => std::string
+
+---------8<--------------------------
+
+string'ler indekslenemez
+
+// hata
+fn main() {
+    let str = "test";
+    println!("{}", str[0]);
+}
+
+---------8<--------------------------
+
+match yapısında tüm olasılıkların belirtilmesi gerekiyor
+yada beklenen olasılıklar ve _ ile olabilecek diğer olasılıkları belirtiyor
+olasılıklar match'ın tipine göre değişiyor
+
+ör bool bir match ya true yada false olur
+int tüm int tipleri
+enum enum'un tüm değerleri vs
+
+---------8<--------------------------
