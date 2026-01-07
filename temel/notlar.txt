@@ -264,3 +264,24 @@ iterator: yenileyici, tekrarlayıcı
 iterator: In computer science, an iterator is an object that allows a programmer to traverse through all the elements of a collection, regardless of its specific implementation. An iterator is sometimes called a cursor, especially within the context of a database
 
 ---------8<--------------------------
+
+iterator değil vec için
+
+swap_remove
+
+vec'den bir elemanı almak, alınan yerine son elemanı koymak
+
+vec.swap_remove(index);
+vec.remove()'dan farkı sıra önemli değil,
+çıkan eleman yerine son elemanı koyuyor
+
+
+fn take<T>(mut vec: Vec<T>, index: usize) -> Option<T> {
+    if vec.get(index).is_none() {
+        None
+    } else {
+        Some(vec.swap_remove(index))
+    }
+}
+
+---------8<--------------------------

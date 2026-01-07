@@ -60,3 +60,18 @@ into_iter() = gives an iterator over T
 iter_mut() = gives an iterator over &mut T
 
 ---------8<--------------------------
+
+let mut result: Vec<IpAddr> = vec![];
+
+for ip_address in ip_addresses.into_iter() {
+    result.push(IpAddr::V4(ip_address.addr()));
+}
+
+yerine
+
+let result: Vec<IpAddr> = ip_addresses.into_iter()
+    .map(|ip_address| IpAddr::V4(ip_address.addr()))
+    .collect();
+
+
+---------8<--------------------------
