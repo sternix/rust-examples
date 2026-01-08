@@ -554,3 +554,9 @@ struct Xyz {}
 ile struct'ın Default'u impl etmesini sağlayabiliriz.
 
 ---------8<--------------------------
+
+All of a vector's elements are stored in a continuous, heap-allocated chunk of memory. The capacity of a vector is the maximum number of elements that would fit in this chunk. Vec normally manages the capacity for you, automatically allocating a larger buffer and moving the elements into it when more space is needed. There are also a few methods for managing capacity explicitly.
+
+Vec::with_capacity(n), creates a new, empty vector with capacity n.
+
+---------8<--------------------------
