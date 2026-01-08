@@ -545,3 +545,12 @@ Most generic type variables should be restricted to Sized types. In fact, this i
 
 
 ---------8<--------------------------
+
+eğer Struct'ın tüm alanları Default'u impl etmişse
+
+#[derive(Default)]
+struct Xyz {}
+
+ile struct'ın Default'u impl etmesini sağlayabiliriz.
+
+---------8<--------------------------
