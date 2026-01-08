@@ -285,3 +285,16 @@ fn take<T>(mut vec: Vec<T>, index: usize) -> Option<T> {
 }
 
 ---------8<--------------------------
+
+Every type in Rust has a lifetime, including i32 and String. Most are simply 'static, meaning that values of those types
+can live for as long as you like; for example a Vec<i32> is a self-contained, and needn't be dropped before any particular variable
+goes out of scope. But a type like Vec<&'a i32> has a lifetime that must be enclosed by 'a: it must be dropped while its referents are still alive
+
+if your function doesn't return any references (or other types that require lifetime parameters),
+then you never need to write out lifetime for your parameters.
+
+---------8<--------------------------
+ran
+0..20 => std::ops::Range{start: 0, end: 20};
+
+---------8<--------------------------

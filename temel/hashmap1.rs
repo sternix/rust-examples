@@ -14,6 +14,16 @@ fn main() {
     println!("{}", table.len());
 }
 
+
+/*
+Burada show fonksiyonuna shared referans yolladığımızda yani
+yani show(&table) şeklinde tanımladığımızda
+k tipi &String, v tipi &Vec<String> oluyor
+
+eğer show(table) şeklinde olsaydı
+k tipi String v tipi Vec<String> olacaktı ve table'ın sahipliğini show fonksiyonu alacaktı.
+*/
+
 fn show(table: &Table) {
     for (k, v) in table {
         println!("key: {}", k);
