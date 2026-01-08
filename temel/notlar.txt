@@ -294,7 +294,156 @@ if your function doesn't return any references (or other types that require life
 then you never need to write out lifetime for your parameters.
 
 ---------8<--------------------------
+
+
+---------8<--------------------------
 ran
 0..20 => std::ops::Range{start: 0, end: 20};
+
+---------8<--------------------------
+
+.. RangeFull
+a.. RangeFrom{start:a }
+..b RangeTo{end: b}
+a..b Range{start:a, end:b}
+
+Rust Ranges are half open: they include the start value, if any but not the end value.
+The range 0..4 includes the numbers 0,1,2,3.
+
+Only ranges that include a start value are iterable, since a loop must have somewhere to start.
+But in array slicing, all four forms are useful. If the start or end of the range is omitted,
+it defaults to the start or end of the data being sliced.
+
+---------8<--------------------------
+
+nonstatic methods are called on values, like my_vec.len()
+static methods are called on types like Vec::new()
+
+---------8<--------------------------
+
+return Vec<i32>::with_capacity(10); // <- HATA
+return Vec::<i32>::with_capacity(10) // DOĞRU
+
+let ramp = (0..n).collect<Vec<i32>>(); // <- HATA
+let ramp = (0..n).collect::<Vec<i32>>(); // DOĞRU
+
+yada kısaca
+
+// fonksiyonun dönüş değerinden tipi buluyor
+return Vec::with_capacity(10);
+
+// ramp'ın tipinden infer ediyor.
+let ramp: Vec<i32> = (0..n).collect();
+
+The symbol ::<...> is known as the turbofish
+
+---------8<--------------------------
+
+Bitwise operators have higher precedence than comparisons,
+unlike C, so if you write
+x & BIT != 0
+that means
+(x & BIT) != 0, as you probably intended,
+This is much more usual than C's interpretation
+X & (BIT != 0) which tests the wrong bit
+
+---------8<--------------------------
+
+Unlike C, Rust doesn't support chaining assignment,
+you can't write a = b = 3 to assign the value 3 to both a and b
+
+---------8<--------------------------
+
+Rust does no have C's increment and decrement operators ++ and --
+
+---------8<--------------------------
+
+Values of type &String auto-convert to type &str without a cast
+Values of type &Vec<i32> auto-convert to &[i32]
+Values of type &Box<T> auto-convert to &T
+
+these are called deref coercions, because they apply to types that implement Deref buildin trait
+The purpose of Deref coercion is to make smart pointer types, like Box, behave as much like the underlying
+value as possible. Using a Box<T> is mostly just like using a plain T, thanks to Deref
+
+---------8<--------------------------
+
+CamelCase
+snake_case
+
+---------8<--------------------------
+
+Unit struct
+struct Xyz;
+
+hiç bir alanı olmayan bir struct, fakat method tanımlanabilir.
+A value of such a type occupies no memory, much like the unit type ()
+
+---------8<--------------------------
+
+struct X;
+
+impl X {
+    fn method() -> Self {}
+    fn method() -> X {}
+
+    // ikiside aynı
+}
+
+---------8<--------------------------
+
+all constructors and fields of a public enum are automatically public.
+
+---------8<--------------------------
+
+Patterns that always match are special in Rust. They are called irrefutable patterns,.
+
+---------8<--------------------------
+
+Fat pointer hem nesnenin, hem de vtable'ın adresini tutan pointerlar
+
+---------8<--------------------------
+
+In Rust, as in C++, the vtable is generated once, at compile time, and shared by all objects of the same type.
+
+in C++, the vtable pointer, or vptr, is stored as part of the struct, Rust uses a fat pointers instead. The struct itself contains nothing but its fields. This way,a struct can implement dozens of traits without containing dozens of vptrs.
+
+Rust automatically converts ordinary references into trait objects when needed.
+
+---------8<--------------------------
+
+traitlerde Self, o trait'i implemente eden tipe karşılık geliyor
+
+---------8<--------------------------
+
+int ve float tiplerin Default implementasyonu 0'dır
+
+---------8<--------------------------
+
+Bir trait'i use ile scope'a aldığımızda o trait'in metodları görünür olur.
+
+---------8<--------------------------
+
+std::ops::Neg => -x => x.neg()
+std::ops::Not => !x => x.not()
+
+std::ops::Add => x + y => x.add(y)
+std::ops::Sub => x - y => x.sub(y)
+std::ops::Mul => x * y => x.mul(y)
+std::ops::div => x / y => x.div(y)
+std::ops::Rem => x % y => x.rem(y)
+
+
+trait Add<RHS=Self> {
+    type Output;
+    fn add(self, rhs: RHS) -> Self::Output;
+}
+
+std::ops::BitAnd => x & y  => x.bitand(y)
+std::ops::BitOr  => x | y  => x.bitor(y)
+std::ops::BitXor => x ^ y  => x.bitxor(y)
+std::ops::Shl    => x << y => x.shl(y)
+std::ops::Shr    => x >> y => x.shr(y)
+
 
 ---------8<--------------------------
