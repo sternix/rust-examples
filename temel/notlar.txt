@@ -447,3 +447,101 @@ std::ops::Shr    => x >> y => x.shr(y)
 
 
 ---------8<--------------------------
+
+matematikte bir şeyin eşitliği için 3 şartı sağlamalı
+1- x == y ise y == x olmalı
+2- x == y , y == z ise x == z sağlanmalı
+3- x == x sağlanmalı
+
+---------8<--------------------------
+
+f32 ve f64 tipleri
+
+assert_eq!(f64::is_nan(0.0 / 0.0));
+assert_eq!(0.0 / 0.0 == 0.0 / 0.0);
+
+gibi 3. şartı sağlamadıkları için
+f32 ve f64 std::cmp::Eq yerine std::cmp::PartialEq
+trait'ini implemente ediyor.
+
+3 şartıda sağlayan std::cmp::Eq trait'ini impl
+edebilir. yada
+#[derive(Eq)] edebilir
+
+
+The standart library defines Eq as an extension of PartialEq,
+adding no new methods:
+
+trait Eq: PartialEq<Self> {}
+
+---------8<--------------------------
+
+The only method of PartialOrd you must implement yourself is partial_cmp. When partial_cmp returns Some(o), then indicates self's relationship to other.
+
+std::cmp::Ordering
+
+enum Ordering {
+    Less, // self < other
+    Equal, // self == other
+    Greater, // self > other
+}
+
+---------8<--------------------------
+
+*a.index(i) => a[i]
+*a.index_mut(i) => mutable olan a için a[i]
+*a.index(std::ops::Range {start: i, end: j}) => a[i..j]
+
+---------8<--------------------------
+
+We said earlier that when you implement a trait, either the trait or the type must be new in the current crate. This is called coherence rule (Tutarlılık kuralı). It helps Rust ensure that trait implementations are unique. Your code can't impl Write for u8, because both Write and u8 are defined in the standart library.
+
+---------8<--------------------------
+
+Utility Traits
+
+Drop: Destructors, Cleanup code that Rust runs automatically whenever a value is dropped.
+
+Sized: Marker trait for types with a fixed size known at compile time, as opposed to types (such as slices) that are dynamically sized.
+
+Clone: Types that support cloning values.
+
+Copy: Marker trait for types that can be cloned simply by making a byte-for-byte copy of the memory containing the value.
+
+Deref and DerefMut: Traits for smart pointer types.
+
+Default: Types that have a sensible(makul) "default value"
+
+AsRef and AsMut: Conversion traits for borrowing one type of reference from another.
+
+Borrow and BorrowMut: Conversion traits, like AsRef/AsMut, but additionally guaranteeing consistent hashing, ordering, and equality.
+
+From and Into: Conversion traits for transforming one type of value into another.
+
+ToOwned: Conversion trait for converting a reference to an owned value.
+
+---------8<--------------------------
+
+A sized type is one whose values all have same size in memory. Almost all types in Rust are sized: every u64 takes eight bytes, every (f32,f32,f32) tuple twelve. Even enums are sized: no matter which variant is actually present, an enum always occupies enough space to hold its largest variant. And although a Vec<T> owns a heap-allocated buffer whose size can vary, the Vec value itself is a pointer to the buffer, its capacity, and length, so Vec<T> is a sized type.
+
+However, Rust also has a few unsized types whose values are not all the same size. For example, the string slice type str (note, without an &) is unsized. The string literals "diminutive" and "big" are references to str slices that occupy ten and three bytes. Array slice types like [T] (again, without an &) are unsized, too: a shared reference like &[u8] can point to a [u8] slice of any size. Because the str and [T] types denote sets of values of varying sizes, they are unsized types.
+
+str tipi unsized - değişkene göre tipin uzunluğu değişiyor.
+
+fakat &str Sized - tip hafızada bir ptr ve bir length alanı olan bir struct - yada fat pointer, hangi değişken atanırsa atansın sonuçta size olarak değişecek birşey yok.
+
+
+The other common kind of unsized type in Rust is the referent of a trait object. A trait object is a pointer to some value that implements a given trait. For example, the types &std::io::Write and Box<std::io::Write> are pointers to some value that implements the Write trait. The referent might be a file, or a network socket, or some type of your own for which you have implemented Write. Since the set of types that implement Write is open-ended, Write considered as a type is unsized: its values have various sizes.
+
+Rust can't store unsized values in variables or pass them as arguments. You can only deal with them through pointers like &str or Box<Write>, which themselves are sized.
+
+A pointer to an unsized value is always a fat pointer, two words wide: a pointer to a slice also carries the slice's length, and a trait object also carries a pointer to a vtable of method implementations.
+
+All sized types implement std::marker::Sized trait
+
+Rust itself uses marker traits to mark certain types as having characteristics of interest.
+
+Most generic type variables should be restricted to Sized types. In fact, this is necessary so often that it is the implicit default in Rust: if you write struct S<T> {}, Rust understands you to mean struct S<T: Sized> {}. Iy you do not want to constrain T this way, you must explicitly optout, writing struct S<T: ?Sized> {}. The ?Sized syntax is specific to this case, and means "not necessary Sized". For example if you write struct S<T: ?Sized> {b: Box<T> } then Rust will allow you to write S<str> and S<Write>, where the box becomes a fat pointer, as well as S<i32> and S<String>, where the box is an ordinary pointer.
+
+
+---------8<--------------------------
