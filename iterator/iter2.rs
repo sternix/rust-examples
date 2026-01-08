@@ -8,15 +8,17 @@ fn main() {
     println!("There's:");
     let v = vec!["antimony", "arsenic", "aluminum", "selenium"];
     for element in &v {
-        println!("{}", element);
+        println!("{element}");
     }
 
-    // aynı işi yapıyor
-
-    let mut iterator = (&v).into_iter();
-    while let Some(element) = iterator.next() {
-        println!("{}", element);
+    let mut it = v.iter();
+    while let Some(element) = it.next() {
+        println!("{element}");
     }
 
-    // burada bize göstermeden (&v).into_iter() ile bir iterator oluşturuyor.
+    // iter() referans
+    // into_iter() value alıyor
+
+    // yukarıda v.into_iter() yapılsa bu satır hata veriyor
+    println!("v yaşıyor, len: {}",v.len()); 
 }

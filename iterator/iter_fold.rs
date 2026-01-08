@@ -22,3 +22,8 @@ fn triangle_klasik(n: i32) -> i32 {
 fn triangle(n: i32) -> i32 {
     (1..n + 1).fold(0, |sum, item| sum + item)
 }
+
+fn main() {
+    println!("{}",triangle(3));
+    println!("{}",triangle_klasik(3));
+}
