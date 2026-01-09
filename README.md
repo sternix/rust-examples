@@ -30,3 +30,5 @@
 [https://www.tutorialspoint.com/rust/](https://www.tutorialspoint.com/rust/)
 
 [https://www.possiblerust.com/](https://www.possiblerust.com/)
+
+[https://cglab.ca/~abeinges/blah/](https://cglab.ca/~abeinges/blah/)
