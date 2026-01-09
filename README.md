@@ -5,6 +5,10 @@
 
 [https://doc.rust-lang.org/1.30.0/book/first-edition/](https://doc.rust-lang.org/1.30.0/book/first-edition/)
 
+[https://rust-lang-nursery.github.io/rust-cookbook/intro.html](https://rust-lang-nursery.github.io/rust-cookbook/intro.html)
+
+[https://google.github.io/comprehensive-rust/](https://google.github.io/comprehensive-rust/)
+
 [https://rustbyexample.io/](https://rustbyexample.io/)
 
 [https://www.programiz.com/rust](https://www.programiz.com/rust)
