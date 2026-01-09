@@ -3,6 +3,8 @@
 ### Yararlanılan veya Faydalı kaynaklar
 [https://doc.rust-lang.org/book/](https://doc.rust-lang.org/book/)
 
+[https://doc.rust-lang.org/rust-by-example/](https://doc.rust-lang.org/rust-by-example/)
+
 [https://doc.rust-lang.org/1.30.0/book/first-edition/](https://doc.rust-lang.org/1.30.0/book/first-edition/)
 
 [https://rust-lang-nursery.github.io/rust-cookbook/intro.html](https://rust-lang-nursery.github.io/rust-cookbook/intro.html)

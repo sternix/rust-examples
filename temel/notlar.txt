@@ -709,8 +709,16 @@ git clone https://github.com/rust-lang/rust.vim ~/.vim/pack/plugins/start/rust.v
 
 örnek Cargo.toml release ve debug profilleri
 ```
+
+bu debug build oluyor
+
 [profile.dev]
 panic = "unwind"
+strip = true  # Automatically strip symbols from the binary.
+
+unwind'i kaldırmak
+[profile.release]
+panic = "abort"
 
 [profile.release]
 panic = "unwind"
@@ -729,6 +737,11 @@ opt-level = "z"  # Optimize for size.
 lto = true
 ```
 
+[profile.release]
+opt-level = "z"  # Optimize for size.
+
+[profile.release]
+lto = true
 
 
 ```
@@ -743,10 +756,7 @@ opt-level = 3
 lto = true
 ```
 
-
-
 Cargo.toml
-=BEGIN
 ```
 [profile.release]
 opt-level = 3
@@ -755,6 +765,15 @@ codegen-units = 1
 panic = 'abort'
 strip = "symbols"
 ```
+
+[profile.release.package."*"]
+codegen-units = 1
+opt-level = 3
+
+[profile.release]
+opt-level = 3
+lto = true
+
 
 https://github.com/stoolap/stoolap/blob/main/Cargo.toml
 
@@ -1827,5 +1846,216 @@ fn filter_letters(string: &str) -> String {
 ---------8<--------------------------
 
 Option is if you are thinking: "Maybe there will be something, and maybe there won't." But Result is if you are thinking: "Maybe it will fail."
+
+---------8<--------------------------
+
+let ref x = 1;
+
+is identical to:
+
+let x = &1;
+
+And:
+
+let &x = &1;
+
+is identical to:
+
+let x = 1
+
+---------8<--------------------------
+
+varsayılan allocator'u değiştirmek
+
+use std::alloc::System;
+
+#[global_allocator]
+static A: System = System;
+
+ör:
+
+extern crate wee_alloc;
+
+// Use `wee_alloc` as the global allocator.
+#[global_allocator]
+static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
+
+pub fn leak_test() {
+    // This leaks when using wee_alloc
+    let a = Box::new([0; 85196]);
+    let b = Box::new([0; 80000]);
+    drop(a);
+    drop(b);
+}
+
+fn main() {
+    loop {
+        leak_test();
+    }
+}
+
+---------8<--------------------------
+
+By default, Cargo specifies 16 parallel codegen units for release builds. This improves compile times, but prevents some optimizations.
+yeni sürümlerde ne durumda?
+
+[profile.release]
+codegen-units = 1
+
+---------8<--------------------------
+
+let r = o.ok_or(expensive()); // always evaluates `expensive()`
+
+should be changed to this:
+
+let r = o.ok_or_else(|| expensive()); // evaluates `expensive()` only when needed
+
+---------8<--------------------------
+
+cargo run'ı parametre ile kullanmak için
+
+cargo run --release -- ARG
+
+cargo run --release -- dosya.txt
+
+---------8<--------------------------
+
+tokio-postgres
+
+prepare_typed için örnekler
+
+let connection = self.pool.get().await?;
+let stmt = connection
+    .prepare_typed("SELECT * FROM jobs WHERE jobid = $1", &[Type::INT4])
+    .await?;
+let row = connection.query_opt(&stmt, &[&id]).await?;
+
+
+let connection = self.pool.get().await?;
+let stmt = connection
+    .prepare_typed(
+        "INSERT INTO jobs (uid, fid, state) VALUES($1,$2,$3) RETURNING *",
+        &[Type::INT4, Type::INT4, Type::INT4],
+    )
+    .await?;
+let row = connection
+    .query_opt(&stmt, &[&job.user_id, &job.file_id, &DEFAULT_START_STATE])
+    .await?;
+
+match row {
+    Some(row) => PrintJob::try_from(row),
+    None => {
+        warn!("insert failed for uid {}", job.user_id);
+        Err(PrintJobError::DatabaseError("Insert failed".to_string()))
+    }
+}
+
+---------8<--------------------------
+
+global değişken için (lazy_static yerine)
+
+use std::{env, io};
+
+use once_cell::sync::OnceCell;
+
+#[derive(Debug)]
+pub struct Logger {
+    // ...
+}
+static INSTANCE: OnceCell<Logger> = OnceCell::new();
+
+impl Logger {
+    pub fn global() -> &'static Logger {
+        INSTANCE.get().expect("logger is not initialized")
+    }
+
+    fn from_cli(args: env::Args) -> Result<Logger, std::io::Error> {
+       // ...
+    }
+}
+
+fn main() {
+    let logger = Logger::from_cli(env::args()).unwrap();
+    INSTANCE.set(logger).unwrap();
+    // use `Logger::global()` from now on
+}
+
+---------8<--------------------------
+
+libc'de ptr çevirimi
+
+let mut cpus: libc::c_uint = 0;
+let mut cpus_size = std::mem::size_of_val(&cpus);
+
+let mut mib = [libc::CTL_HW, libc::HW_NCPU, 0, 0];
+unsafe {
+    libc::sysctl(mib.as_mut_ptr(),
+                 2,
+                 &mut cpus as *mut _ as *mut _,
+                 &mut cpus_size as *mut _ as *mut _,
+                 std::ptr::null_mut(),
+                 0);
+}
+
+---------8<--------------------------
+
+FreeBSD'de çalışır
+
+fn get_num_cpus() -> usize {
+    use std::ptr;
+    let mut cpus: libc::c_uint = 0;
+    let mut cpus_size = std::mem::size_of_val(&cpus);
+
+    let mut mib = [libc::CTL_HW, libc::HW_NCPU, 0, 0];
+    // int sysctl(const int *name, u_int namelen, void *oldp, size_t *oldlenp, const void *newp, size_t newlen);
+    /* ikiside aynı işi yapıyor
+    unsafe {
+        libc::sysctl(mib.as_mut_ptr(),
+                     2,
+                     &mut cpus as *mut _ as *mut _,
+                     &mut cpus_size as *mut _ as *mut _,
+                     ptr::null_mut(),
+                     0);
+    }*/
+    unsafe {
+        libc::sysctl(
+            mib.as_mut_ptr(),
+            2,
+            &mut cpus as *mut libc::c_uint as *mut libc::c_void,
+            &mut cpus_size as *mut usize as *mut libc::size_t,
+            ptr::null_mut(),
+            0,
+        );
+    }
+
+    if cpus < 1 {
+        cpus = 1;
+    }
+    cpus as usize
+}
+
+---------8<--------------------------
+
+extern crate libc;
+extern {
+    fn c_func(x: *mut *mut libc::c_void);
+}
+
+fn main() {
+    let x = 0 as *mut u8;
+    c_func(&mut (x as *mut libc::c_void));
+    println!("new pointer is {}", x);
+}
+
+The code should be written something like
+(&mut x) as *mut _ as *mut *mut libc::c_void.
+
+---------8<--------------------------
+
+async { /* body */ }
+
+// is equivalent to
+
+(async || { /* body */ })()
 
 ---------8<--------------------------
