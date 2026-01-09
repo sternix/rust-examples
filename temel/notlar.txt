@@ -560,3 +560,9 @@ All of a vector's elements are stored in a continuous, heap-allocated chunk of m
 Vec::with_capacity(n), creates a new, empty vector with capacity n.
 
 ---------8<--------------------------
+
+BTreeMap HashMap'in
+capacity, with_capacity, reserve, shrink_to_fit vs hariç diğer tüm metodlarına sahip
+
+---------8<--------------------------
+---------8<--------------------------
