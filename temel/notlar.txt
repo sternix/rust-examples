@@ -2059,3 +2059,9 @@ async { /* body */ }
 (async || { /* body */ })()
 
 ---------8<--------------------------
+
+Supertraits are not inheritance! Supertraits are a constraint that if some trait is implemented, some other trait must also be implemented.
+
+---------8<--------------------------
+
+---------8<--------------------------
