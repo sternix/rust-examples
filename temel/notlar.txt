@@ -1189,3 +1189,257 @@ eğer bağımlı bir crate ~/.cargo/registry
 dizininde yoksa derleyemeyebilir
 
 ---------8<--------------------------
+
+thowaway ('_) lifetime:
+
+impl Iterator for DataIter<'_> { ... }
+
+---------8<--------------------------
+
+eğer programda print!() kullanılıp en sonunda println!()
+kullanılmamışsa çıktının sonunda % gibi işaretler bulunabilir.
+ya println!() yada stdout'un flush edilmesi gerekiyor
+
+---------8<--------------------------
+
+TODO: örnek yaz
+
+https://stackoverflow.com/questions/31192956/whats-the-de-facto-way-of-reading-and-writing-files-in-rust-1-x
+
+Read a file to a String
+
+use std::fs;
+
+fn main() {
+    let data = fs::read_to_string("/etc/hosts").expect("Unable to read file");
+    println!("{}", data);
+}
+
+
+Read a file as a Vec<u8>
+
+use std::fs;
+
+fn main() {
+    let data = fs::read("/etc/hosts").expect("Unable to read file");
+    println!("{}", data.len());
+}
+
+Write a file
+
+use std::fs;
+
+fn main() {
+    let data = "Some data!";
+    fs::write("/tmp/foo", data).expect("Unable to write file");
+}
+
+
+Read a file to a String
+
+use std::fs::File;
+use std::io::Read;
+
+fn main() {
+    let mut data = String::new();
+    let mut f = File::open("/etc/hosts").expect("Unable to open file");
+    f.read_to_string(&mut data).expect("Unable to read string");
+    println!("{}", data);
+}
+
+
+Read a file as a Vec<u8>
+
+use std::fs::File;
+use std::io::Read;
+
+fn main() {
+    let mut data = Vec::new();
+    let mut f = File::open("/etc/hosts").expect("Unable to open file");
+    f.read_to_end(&mut data).expect("Unable to read data");
+    println!("{}", data.len());
+}
+
+Write a file
+
+use std::fs::File;
+use std::io::Write;
+
+fn main() {
+    let data = "Some data!";
+    let mut f = File::create("/tmp/foo").expect("Unable to create file");
+    f.write_all(data.as_bytes()).expect("Unable to write data");
+}
+
+use std::fs::File;
+use std::io::{BufReader, Read};
+
+fn main() {
+    let mut data = String::new();
+    let f = File::open("/etc/hosts").expect("Unable to open file");
+    let mut br = BufReader::new(f);
+    br.read_to_string(&mut data).expect("Unable to read string");
+    println!("{}", data);
+}
+
+
+
+use std::fs::File;
+use std::io::{BufWriter, Write};
+
+fn main() {
+    let data = "Some data!";
+    let f = File::create("/tmp/foo").expect("Unable to create file");
+    let mut f = BufWriter::new(f);
+    f.write_all(data.as_bytes()).expect("Unable to write data");
+}
+
+
+use std::fs::File;
+use std::io::{BufRead, BufReader};
+
+fn main() {
+    let f = File::open("/etc/hosts").expect("Unable to open file");
+    let f = BufReader::new(f);
+
+    for line in f.lines() {
+        let line = line.expect("Unable to read line");
+        println!("Line: {}", line);
+    }
+}
+
+use std::fs::OpenOptions;
+
+fn main() {
+    let data = "Some data!\n";
+    let mut f = OpenOptions::new()
+        .append(true)
+        .create(true) // Optionally create the file if it doesn't already exist
+        .open("/tmp/foo")
+        .expect("Unable to open file");
+    f.write_all(data.as_bytes()).expect("Unable to write data");
+}
+
+
+use std::io::{BufWriter, Write};
+use std::fs::OpenOptions;
+
+fn main() {
+    let data = "Some data!\n";
+    let f = OpenOptions::new()
+        .append(true)
+        .open("/tmp/foo")
+        .expect("Unable to open file");
+    let mut f = BufWriter::new(f);
+    f.write_all(data.as_bytes()).expect("Unable to write data");
+}
+
+---------8<--------------------------
+
+https://users.rust-lang.org/t/slow-postgres-copy-using-buffer/59936/6
+
+let mut reader = client.copy_out(copy_out_query.as_str()).unwrap();
+
+    let mut buffer = vec!();
+    let mut total_rows = 0;
+    // Keep reading from source until reader is empty
+    loop {
+        let row = reader.fill_buf().unwrap();
+        let row_bytes = row.len();
+
+        // If we've reached EOF, end now, writing remaining rows
+        if row_bytes == 0 {
+            if buffer.len() > 0 {
+                // Do some stuff with remaining rows
+            }
+            break;
+        }
+
+        buffer.extend(row);
+        total_rows = total_rows + 1;
+
+        if total_rows % 50000 == 0 {
+            // Do some stuff with last 50K rows
+            buffer = vec!();
+        }
+
+        // ensure the bytes we worked with aren't returned again later
+        reader.consume(row_bytes);
+    }
+
+
+---------8<--------------------------
+
+crate:: is equivalent to root "/" and super:: is the parent module like ".."
+
+---------8<--------------------------
+
+Property                    &T      &mut T  &Cell<T>
+You can read                Yes     Yes     Yes
+You can write               No      Yes     Yes
+Others can read             Yes     No      Yes
+Others can write            No      No      Yes
+How many active references? Many    One     Many
+References in other threads Yes     No      No
+Allows projection           Yes     Yes     Sometimes
+
+---------8<--------------------------
+
+// https://stackoverflow.com/questions/32552593/is-it-possible-for-one-struct-to-extend-an-existing-struct-keeping-all-the-fiel
+
+struct StructA;
+
+impl StructA {
+    fn name(&self) -> &'static str {
+        "Anna"
+    }
+}
+
+struct StructB {
+    a: StructA,
+    // other fields...
+}
+
+// eğer bu olmazsa
+// no method named `name` found for struct `StructB` in the current scope
+// hatası oluyor
+impl std::ops::Deref for StructB {
+    type Target = StructA;
+    fn deref(&self) -> &Self::Target {
+        &self.a
+    }
+}
+
+fn main() {
+    let b = StructB { a: StructA };
+    println!("{}", b.name());
+}
+
+---------8<--------------------------
+
+.env dosyasındaki değerleri env olarak okumak
+
+dotenv::dotenv().expect("Failed to read .env file");
+
+let database = Database {
+    url: std::env::var("DATABASE_URL").unwrap_or(String::from("test.db")),
+};
+
+---------8<--------------------------
+
+array tipi tanımlanırken,
+
+let array = [1u8, 2, 3];
+
+şeklinde birinci elemana tip verdiğimizde, arrayın tipinide belirlemiş oluyoruz
+
+---------8<--------------------------
+
+// crate::model::file::File
+// kullanmak yerine
+// crate::model::File
+// şeklinde kullanmak için
+// mod.rs dosyasında
+pub use file::File;
+
+---------8<--------------------------
