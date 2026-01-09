@@ -30,4 +30,9 @@ fn main() {
 
     // Pad '*', aligned right, width, limit
     assert_eq!(format!("{:*>12.4}", "bookends"), "********book");
+
+    assert_eq!(
+        format!("{2:#06x},{1:b},{0:=>10}", "first", 10, 100),
+        "0x0064,1010,=====first"
+    );
 }

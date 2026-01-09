@@ -565,4 +565,221 @@ BTreeMap HashMap'in
 capacity, with_capacity, reserve, shrink_to_fit vs hariç diğer tüm metodlarına sahip
 
 ---------8<--------------------------
+
+The four std::io:: traits Read, BufRead, Write and Seek are so commonly used that there's a prelude module containing only those traits:
+
+use std::io::prelude::*;
+
+---------8<--------------------------
+
+use std::io::{self ...}
+
+The self keyword here declares io as an alias to the std::io module. That way, std::io::Result and std::io::Error can be written more concisely as io::Result and io::Error, and so on.
+
+---------8<--------------------------
+
+fn f(c: &City) -> bool
+
+|city| city.x > 0
+
+tipleri farklı
+
+fakat generic ifade ile
+
+fn fnx<F>(f: F)
+    where F: Fn(&City) -> bool
+{}
+
+ile hem fonksiyon hem closure bu fonksiyona parametre olarak verilebilir.
+
+---------8<--------------------------
+
+A closure is callable, but it's not a fn. The closure
+|city| city.monster_attack_risk > limit
+has its own type that's not a fn type.
+
+---------8<--------------------------
+
+RUST_BACKTRACE=full ./diverges
+RUST_BACKTRACE=full cargo run
+
+fn diverges() -> ! {
+    panic!("This function never returns!");
+}
+
+A diverging function can be used as any type:
+
+let x: i32 = diverges();
+let x: String = diverges();
+
+---------8<--------------------------
+
+for s in vec.iter() {...} // &String
+for s in vec.iter_mut() {...} // &mut String
+for s in vec.into_iter() {...} // String
+
+// implicit!
+for s in &vec {...} // &String
+for s in &mut vec {...} // &mut String
+for s in vec {...} // String
+
+for x in &v {...} // returns &T
+for x in &mut v {...} // returns &mut T
+for x in v {...} // returns T, consumes v
+
+---------8<--------------------------
+
+rustc --print $PARAM
+
+PARAM'lar
+sysroot
+cfg
+target-list
+target-cpus
+target-features
+relocation-models
+code-models
+tls-models
+
+olabilir
+
+---------8<--------------------------
+
+foo(mutex_string.lock().clone()); // Drop guard at the end of foo.
+
+let s = mutex_string.lock().clone(); // Drop guard before foo.
+foo(s);
+
+---------8<--------------------------
+
+#!/usr/bin/env bash
+set -e
+cargo watch -x test -x clippy -x "fmt -- --write-mode=diff"
+
+---------8<--------------------------
+Cargo.toml'da absolute path kullanmak
+
+dosya sisteminde proje olan bir dizini path ile kullanabiliriz
+
+[dependencies]
+tokio = { version = "0.2", features = ["macros"] }
+#warp = "0.2"
+warp = { path = "/home/test/pub/warp"}
+
+git repo
+yada relative dir
+
+[dependencies]
+clap = "2.27.1" # from crates.io
+rand = { git = "https://github.com/rust-lang-nursery/rand" } # from online repo
+bar = { path = "../bar" } # from a path in the local filesystem
+
+Cargo.toml'da path tanımlama (relative)
+deadpool-postgres = { version = "0.5.0", path = "../../postgres" }
+
+---------8<--------------------------
+
+cargo'ya linker path vermek için
+
+setenv RUSTFLAGS '-L /usr/local/lib'
+cargo build
+yada
+cargo run
+
+---------8<--------------------------
+
+TODO: örnek yaz
+
+extern crate bcrypt;
+
+use bcrypt::{DEFAULT_COST, hash, verify};
+
+let hashed = hash("hunter2", DEFAULT_COST)?;
+let valid = verify("hunter2", &hashed)?;
+
+DEFAULT_COST is 12
+
+---------8<--------------------------
+
+rust vim plugin
+
+git clone https://github.com/rust-lang/rust.vim ~/.vim/pack/plugins/start/rust.vim
+
+---------8<--------------------------
+
+örnek Cargo.toml release ve debug profilleri
+```
+[profile.dev]
+panic = "unwind"
+
+[profile.release]
+panic = "unwind"
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+```
+
+```
+[profile.release]
+opt-level = "z"  # Optimize for size.
+```
+
+```
+[profile.release]
+lto = true
+```
+
+
+
+```
+[profile.release.package."*"]
+codegen-units = 1
+opt-level = 3
+```
+
+```
+[profile.release]
+opt-level = 3
+lto = true
+```
+
+
+
+Cargo.toml
+=BEGIN
+```
+[profile.release]
+opt-level = 3
+lto=true
+codegen-units = 1
+panic = 'abort'
+strip = "symbols"
+```
+
+https://github.com/stoolap/stoolap/blob/main/Cargo.toml
+
+```
+[profile.release]
+lto = true
+codegen-units = 1
+panic = "abort"
+opt-level = 3
+debug = true  # Enable debug symbols for profiling
+
+[profile.bench]
+lto = true
+codegen-units = 1
+
+# CI test profile: faster compile, less disk usage
+[profile.ci]
+inherits = "release"
+lto = "thin"          # Much faster than full LTO
+codegen-units = 16    # Parallel codegen
+debug = false         # No debug symbols needed for tests
+```
+
+---------8<--------------------------
+
+cargo build --features "base32 cat echo rm" --no-default-features
+
 ---------8<--------------------------

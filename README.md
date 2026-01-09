@@ -3,6 +3,8 @@
 ### Yararlanılan veya Faydalı kaynaklar
 [https://doc.rust-lang.org/book/](https://doc.rust-lang.org/book/)
 
+[https://doc.rust-lang.org/1.30.0/book/first-edition/](https://doc.rust-lang.org/1.30.0/book/first-edition/)
+
 [https://rustbyexample.io/](https://rustbyexample.io/)
 
 [https://www.programiz.com/rust](https://www.programiz.com/rust)
@@ -18,3 +20,9 @@
 [https://dev.to/dandyvica/yarit-yet-another-rust-iterators-tutorial-46dk](https://dev.to/dandyvica/yarit-yet-another-rust-iterators-tutorial-46dk)
 
 [https://github.com/rustomax/rust-iterators](https://github.com/rustomax/rust-iterators)
+
+[https://riptutorial.com/rust](https://riptutorial.com/rust)
+
+[https://www.tutorialspoint.com/rust/](https://www.tutorialspoint.com/rust/)
+
+[https://www.possiblerust.com/](https://www.possiblerust.com/)
