@@ -2131,3 +2131,167 @@ where
 }
 
 ---------8<--------------------------
+
+pub enum Number {
+    Defined(f32),
+    Undefined,
+}
+
+Don't do this! No! That's what Option<f32> is for
+
+---------8<--------------------------
+
+#[path = "common/boilerplate.rs"]
+mod boilerplate;
+
+şeklinde bir modüle farklı bir path verilebiliyor
+
+https://github.com/servo/webrender/blob/master/examples/basic.rs
+
+---------8<--------------------------
+
+if let Some(pos) = ctx.input().pointer.hover_pos() {
+    // Using 'ctx' again here will lead to a dead-lock!
+}
+
+if let Some(pos) = { ctx.input().pointer.hover_pos() } {
+    // This is fine!
+}
+
+let pos = ctx.input().pointer.hover_pos();
+if let Some(pos) = pos {
+    // This is fine!
+}
+
+---------8<--------------------------
+
+TODO: örneklendir
+
+{
+    "squadName": "X",
+    "homeTown": "Y",
+    "formed": 1234,
+    "secretBase": "K",
+    "active": true,
+    "members": [
+        {
+            "name": "J",
+            "age": 45,
+            "secretIdentity": "DFGFGH",
+            "powers": [
+                "H",
+                "P",
+                "U"
+            ]
+        }
+    ]
+}
+
+->
+
+use serde::{Deserialize, Serialize};
+
+#[derive(Serialize, Deserialize)]
+struct Member {
+    pub name: String,
+    pub age: i64,
+    #[serde(rename = "secretIdentity")]
+    pub secret_identity: String,
+    pub powers: Vec<String>,
+}
+
+#[Serialize, Deserialize]
+struct Root {
+    #[serde(rename = "squadName")]
+    pub squad_name: String,
+    #[serde(rename = "homeTown")]
+    pub home_town: String,
+    pub formed: i64,
+    #[serde(rename = "secretBase")]
+    pub secret_base: String,
+    pub active: bool,
+    pub members: Vec<Member>,
+}
+
+---------8<--------------------------
+
+TODO: örneklendir
+
+https://github.com/sfackler/rust-postgres/issues/924
+
+postgresql tls'li örnek
+
+let cert = fs::read("global-bundle.pem")?;
+println!("file read");
+let cert = Certificate::from_pem(&cert)?;
+println!("cert created");
+
+let connector = TlsConnector::builder()
+        .add_root_certificate(cert)
+        .build()?;
+println!("connector built");
+let connector = MakeTlsConnector::new(connector);
+println!("connector created");
+
+let connect_result = tokio_postgres::connect(
+        "host=#####.us-west-2.rds.amazonaws.com port=5432 user=### password=### dbname=### connect_timeout=10",
+        connector,
+).await;
+println!("connection finished");
+
+if connect_result.is_err() {
+        let error_msg = connect_result.err().unwrap().to_string();
+        println!("Error: {}", error_msg);
+        return Ok(json!({ "error": error_msg }))
+}
+
+let (client, _connection) = connect_result.unwrap();
+println!("connection unwrapped");
+println!("Client closed: {}", client.is_closed());
+
+let db_response = client.query_one("SELECT name FROM workspaces WHERE id = 760", &[]);
+println!("query sent");
+let db_response = db_response.await;
+println!("query finished");
+
+---------8<--------------------------
+
+turbofish,
+fonksiyon yada struct'ta kaç adet generic parametre varsa ::<>'da o kadar parametre olmalı
+
+iki adet parametre olduğu için biz tipi
+let id = row.get::<usize,i32>(0);
+yada rowindex'i 0 olarak verdiğimiz için
+let id = row.get::<_,i32>(0);
+şeklinde tip vermeden kullanabiliriz,
+
+yada rowindex, usize ve str için impl edilmiş
+
+let id = row.get::<&str,i32>("id");
+
+burada get'e verdiğimiz parametrenin tipi ile ::<X,...> X'in tipi aynı olmalı
+
+
+https://docs.rs/tokio-postgres/0.7.6/tokio_postgres/row/struct.Row.html
+
+pub fn get<'a, I, T>(&'a self, idx: I) -> T where
+    I: RowIndex + Display,
+    T: FromSql<'a>,
+
+->
+
+let rows = client.query("select * from tbltest", &[]).await?;
+
+for row in rows {
+    // bu ikisi aynı
+    let id = row.get::<_,i32>(0);
+    let id: i32 = row.get(0);
+
+    let adi: String = row.get(1);
+    let soyadi: String = row.get(2);
+
+    println!("{}-{}-{}", id , adi , soyadi);
+}
+
+
+---------8<--------------------------
