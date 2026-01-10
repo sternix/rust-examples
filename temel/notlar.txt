@@ -2064,4 +2064,70 @@ Supertraits are not inheritance! Supertraits are a constraint that if some trait
 
 ---------8<--------------------------
 
+trait Summary {
+    fn summarize(&self) -> String;
+}
+
+fn summary(s: &impl Summary) {
+    s.summarize();
+}
+
+fn summary<T: Summary>(s: &T) {
+    s.summarize();
+}
+
+
+TODO: bunların farkı
+
+---------8<--------------------------
+
+for x in c {} — Syntactic sugar, calls c.into_iter() and loops i until None.
+
+---------8<--------------------------
+
+struct Person1;
+
+ile
+
+struct Person1{};
+
+ikiside aynı
+
+oluştururken'de
+
+let p1 = Person;
+
+ile
+
+let p1 = Person{};
+
+ikiside aynı
+
+---------8<--------------------------
+
+TODO: örneklendir
+
+https://blog.thomasheartman.com/posts/on-generics-and-associated-types
+
+Rust has a cool feature for generic types where you can set the default type, which will be assumed if no type is specified. This can be useful if, for most use cases, you want to use a specific type, but want to be able to override it sometimes. See the section on default generic types in the Book for more information.
+
+
+// basic trait, no constraint
+trait Generic<T = String> {
+    // ...
+}
+
+// with constraint
+trait Generic<T: Display = String> {
+    // ...
+}
+
+// or using the `where` clause
+trait Generic<T = String>
+where
+    T: Display,
+{
+    // ...
+}
+
 ---------8<--------------------------
