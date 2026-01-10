@@ -1463,226 +1463,6 @@ pub use file::File;
 
 ---------8<--------------------------
 
-Last login: Fri Jan  9 08:12:33 on console
-[sternix@sternixs-iMac ~]$ sync
-[sternix@sternixs-iMac ~]$ ls -al
-total 2469840
-drwxr-xr-x+  98 sternix  staff       3136 Jan  8 17:14 .
-drwxr-xr-x    6 root     admin        192 Oct 30  2020 ..
-drwx------    2 sternix  staff         64 Aug  6  2024 .AFTVolumes
-drwxr-xr-x    3 sternix  staff         96 Mar 13  2025 .ApacheDirectoryStudio
--r--------    1 sternix  staff          7 Nov 28  2023 .CFUserTextEncoding
--rw-r--r--@   1 sternix  staff      30724 Jan  6 17:17 .DS_Store
--rw-r--r--    1 sternix  staff        744 Apr 14  2025 .Rapp.history
-drwx------  443 sternix  staff      14176 Jan  8 17:10 .Trash
-drwxr-x---    4 sternix  staff        128 Aug  6  2024 .android
-drwxr-xr-x    4 sternix  staff        128 Dec 23 09:23 .ansible
-drwxr-xr-x   14 sternix  staff        448 Aug  1 16:03 .anydesk
--rw-------    1 sternix  staff     113867 Jan  8 17:15 .bash_history
--rw-r--r--    1 sternix  staff       1249 Dec 23 09:04 .bash_profile
--rw-r--r--    1 sternix  staff          0 Dec  9  2024 .bash_sessions_disable
--rw-r--r--    1 sternix  staff          1 Nov 28 12:06 .bashrc
-drwxr-xr-x    4 sternix  staff        128 Dec  1 15:11 .cache
-drwxr-xr-x   12 sternix  staff        384 Jan  9 08:29 .cargo
-drwx------   10 sternix  staff        320 Nov  3 09:04 .config
-drwx------    3 sternix  staff         96 May 17  2021 .cups
-drwxr-xr-x    7 sternix  staff        224 Dec  1  2023 .eclipse
--rw-r--r--    1 sternix  staff      21338 Nov 28 12:01 .git-prompt.sh
--rw-r--r--    1 sternix  staff        286 Nov 28 16:10 .gitconfig
-drwx------    6 sternix  staff        192 Dec 23  2024 .gnupg
-drwxr-xr-x    3 sternix  staff         96 Jan 23  2024 .idlerc
--rw-r--r--    1 sternix  staff        110 Feb 21  2023 .inputrc
-drwxr-xr-x    3 sternix  staff         96 Nov  3 17:10 .kube
--rw-------    1 sternix  staff        137 Jan  7 14:02 .lesshst
-drwx------    3 sternix  staff         96 Sep 18  2023 .local
-drwxr-xr-x    3 sternix  staff         96 Dec  1  2023 .m2
-drwxr-xr-x    3 sternix  staff         96 Dec 14  2023 .matplotlib
-drwxr-xr-x    8 sternix  staff        256 Oct 16  2024 .ncftp
-drwxr-xr-x    4 sternix  staff        128 May  2  2024 .node-gyp
--rw-------    1 sternix  staff        413 Dec 15 10:27 .node_repl_history
-drwxr-xr-x    9 sternix  staff        288 Jul 23  2024 .npm
-drwxr-xr-x   32 sternix  staff       1024 Dec 20  2024 .nvm
-drwxr-xr-x    8 sternix  staff        256 Dec  1  2023 .p2
-drwx------@   8 sternix  staff        256 Oct 15 11:36 .pgadmin
--rw-r--r--    1 sternix  staff        230 Oct  6  2023 .profile
--rw-------    1 sternix  staff       2943 Dec 15 12:05 .psql_history
-drwx------    3 sternix  staff         96 Jun 10  2025 .putty
--rw-------    1 sternix  staff       2531 Jan 16  2025 .python_history
-drwxr-xr-x    7 sternix  staff        224 Mar 31  2023 .rustup
--rw-------    1 sternix  staff         66 Sep 12 15:14 .sqlite_history
-drwx------   16 sternix  staff        512 Jan  7 09:04 .ssh
--rw-------    1 sternix  staff        197 Jan  5 12:14 .stoolap_history
-drwxr-xr-x    6 sternix  staff        192 Dec 16  2020 .subversion
-drwxr-xr-x    4 sternix  staff        128 Dec 11 16:56 .terraform.d
-drwxr-xr-x    5 sternix  staff        160 Jan  7 11:30 .vim
--rw-------    1 sternix  staff      38868 Jan  8 17:14 .viminfo
--rw-r--r--    1 sternix  staff        625 Oct 24 09:03 .vimrc
-drwxr-xr-x    4 sternix  staff        128 Oct 11  2023 .vnc
-drwxr-xr-x    5 sternix  staff        160 Feb 21  2024 .vscode
-drwxr-xr-x   10 sternix  staff        320 Jan  6  2021 .wasmer
--rw-r--r--    1 sternix  staff        624 Nov 12 11:21 .wget-hsts
--rw-r--r--    1 sternix  staff        116 Mar 26  2025 .yarnrc
--rw-------    1 sternix  staff      17552 Oct  4  2023 .zsh_history
--rw-r--r--    1 sternix  staff         47 Mar 31  2023 .zshenv
--rw-r--r--    1 sternix  staff        415 Oct 24 09:04 .zshrc
--rw-r--r--@   1 sternix  staff        856 Nov  4 13:44 AUCPPM.cer.der
-drwx------    4 sternix  staff        128 Sep  2  2024 Applications
-drwx------@   5 sternix  staff        160 Dec 22 17:12 Desktop
-drwx------@  75 sternix  staff       2400 Nov 27 15:45 Documents
-drwx------@ 494 sternix  staff      15808 Jan  8 13:56 Downloads
-drwx------@  73 sternix  staff       2336 Dec 23 09:00 Library
-drwx------+   7 sternix  staff        224 Dec  6  2024 Movies
-drwx------+  76 sternix  staff       2432 Dec 26 09:02 Music
-drwxr-xr-x    2 sternix  staff         64 Mar 28  2024 NetBeansJDKs
-drwxr-xr-x    7 sternix  staff        224 Mar 18  2024 NetBeansProjects
-drwx------+   6 sternix  staff        192 Feb  2  2021 Pictures
-drwxr-xr-x+   4 sternix  staff        128 Dec 14  2020 Public
--rw-r--r--    1 sternix  staff         83 Oct 24 08:55 a.yml
--rw-r--r--    1 sternix  staff      58861 Nov 11 14:50 aaa
--rw-r--r--    1 sternix  staff         70 Oct  9 09:33 abc
--rw-r--r--@   1 sternix  staff      83619 Jun 30  2022 ali_lgs.pdf
-drwxr-xr-x   83 sternix  staff       2656 Jan  8 15:39 backup
-drwxr-xr-x    2 sternix  staff         64 Oct 24 08:59 bin
--rw-r--r--    1 sternix  staff        150 Jan  7 15:16 dfghdfhgdfi
--rw-r--r--    1 sternix  staff        309 Nov 26 14:36 dfghdgfh
-drwxr-xr-x   29 sternix  staff        928 Dec 31 13:34 docs
--rw-r--r--    1 sternix  staff        249 Oct 16 11:28 fghfdhf
-drwxr-xr-x    4 sternix  staff        128 Nov  4  2024 go
--rw-r--r--    1 sternix  staff       1659 Dec 29 11:47 log
-drwxr-xr-x@  26 sternix  staff        832 Mar 18  2024 netbeans
--rw-r--r--    1 sternix  staff         79 Feb 17  2025 pilotgarage.txt
--rw-------    1 sternix  staff     176963 Oct 16 12:05 postgresql-2025-10-16_084404.log
-drwxr-xr-x  100 sternix  staff       3200 Mar  1  2022 ppd
-drwxr-xr-x  250 sternix  staff       8000 Jan  6 10:24 proj
-drwxr-xr-x    4 sternix  staff        128 Feb 26  2021 records
--rw-r--r--    1 sternix  staff       1426 Oct  4  2021 redmine_tanitim.txt
--rw-r--r--    1 sternix  staff  925520332 Oct  3 09:28 s5mini.tar.gz
--rw-r--r--    1 sternix  staff  332887808 Jun 24  2025 shyo-modul-basvuru.tar.gz
-drwxr-xr-x   64 sternix  staff       2048 Jan  7 10:36 sil
--rw-r--r--    1 sternix  staff      57362 Oct 27 17:11 sonuc.txt
--rw-r--r--    1 sternix  staff       1024 Oct  6 09:36 sunucular.txt
--rw-r--r--    1 sternix  staff         63 Oct  6 08:59 sync_docs2mac.sh
--rw-r--r--    1 sternix  staff      18121 Nov  3 08:54 tmux-client-1305.log
--rw-r--r--    1 sternix  staff    1179242 Nov  3 08:54 tmux-server-1307.log
--rw-r--r--@   1 sternix  staff        655 Oct  3 09:38 yt.txt
-[sternix@sternixs-iMac ~]$ vim pilotgarage.txt 
-[sternix@sternixs-iMac ~]$ ls -alh
-total 2469840
-drwxr-xr-x+  98 sternix  staff   3.1K Jan  9 08:43 .
-drwxr-xr-x    6 root     admin   192B Oct 30  2020 ..
-drwx------    2 sternix  staff    64B Aug  6  2024 .AFTVolumes
-drwxr-xr-x    3 sternix  staff    96B Mar 13  2025 .ApacheDirectoryStudio
--r--------    1 sternix  staff     7B Nov 28  2023 .CFUserTextEncoding
--rw-r--r--@   1 sternix  staff    30K Jan  6 17:17 .DS_Store
--rw-r--r--    1 sternix  staff   744B Apr 14  2025 .Rapp.history
-drwx------  443 sternix  staff    14K Jan  8 17:10 .Trash
-drwxr-x---    4 sternix  staff   128B Aug  6  2024 .android
-drwxr-xr-x    4 sternix  staff   128B Dec 23 09:23 .ansible
-drwxr-xr-x   14 sternix  staff   448B Aug  1 16:03 .anydesk
--rw-------    1 sternix  staff   111K Jan  8 17:15 .bash_history
--rw-r--r--    1 sternix  staff   1.2K Dec 23 09:04 .bash_profile
--rw-r--r--    1 sternix  staff     0B Dec  9  2024 .bash_sessions_disable
--rw-r--r--    1 sternix  staff     1B Nov 28 12:06 .bashrc
-drwxr-xr-x    4 sternix  staff   128B Dec  1 15:11 .cache
-drwxr-xr-x   12 sternix  staff   384B Jan  9 08:29 .cargo
-drwx------   10 sternix  staff   320B Nov  3 09:04 .config
-drwx------    3 sternix  staff    96B May 17  2021 .cups
-drwxr-xr-x    7 sternix  staff   224B Dec  1  2023 .eclipse
--rw-r--r--    1 sternix  staff    21K Nov 28 12:01 .git-prompt.sh
--rw-r--r--    1 sternix  staff   286B Nov 28 16:10 .gitconfig
-drwx------    6 sternix  staff   192B Dec 23  2024 .gnupg
-drwxr-xr-x    3 sternix  staff    96B Jan 23  2024 .idlerc
--rw-r--r--    1 sternix  staff   110B Feb 21  2023 .inputrc
-drwxr-xr-x    3 sternix  staff    96B Nov  3 17:10 .kube
--rw-------    1 sternix  staff   137B Jan  7 14:02 .lesshst
-drwx------    3 sternix  staff    96B Sep 18  2023 .local
-drwxr-xr-x    3 sternix  staff    96B Dec  1  2023 .m2
-drwxr-xr-x    3 sternix  staff    96B Dec 14  2023 .matplotlib
-drwxr-xr-x    8 sternix  staff   256B Oct 16  2024 .ncftp
-drwxr-xr-x    4 sternix  staff   128B May  2  2024 .node-gyp
--rw-------    1 sternix  staff   413B Dec 15 10:27 .node_repl_history
-drwxr-xr-x    9 sternix  staff   288B Jul 23  2024 .npm
-drwxr-xr-x   32 sternix  staff   1.0K Dec 20  2024 .nvm
-drwxr-xr-x    8 sternix  staff   256B Dec  1  2023 .p2
-drwx------@   8 sternix  staff   256B Oct 15 11:36 .pgadmin
--rw-r--r--    1 sternix  staff   230B Oct  6  2023 .profile
--rw-------    1 sternix  staff   2.9K Dec 15 12:05 .psql_history
-drwx------    3 sternix  staff    96B Jun 10  2025 .putty
--rw-------    1 sternix  staff   2.5K Jan 16  2025 .python_history
-drwxr-xr-x    7 sternix  staff   224B Mar 31  2023 .rustup
--rw-------    1 sternix  staff    66B Sep 12 15:14 .sqlite_history
-drwx------   16 sternix  staff   512B Jan  7 09:04 .ssh
--rw-------    1 sternix  staff   197B Jan  5 12:14 .stoolap_history
-drwxr-xr-x    6 sternix  staff   192B Dec 16  2020 .subversion
-drwxr-xr-x    4 sternix  staff   128B Dec 11 16:56 .terraform.d
-drwxr-xr-x    5 sternix  staff   160B Jan  7 11:30 .vim
--rw-------    1 sternix  staff    37K Jan  9 08:43 .viminfo
--rw-r--r--    1 sternix  staff   625B Oct 24 09:03 .vimrc
-drwxr-xr-x    4 sternix  staff   128B Oct 11  2023 .vnc
-drwxr-xr-x    5 sternix  staff   160B Feb 21  2024 .vscode
-drwxr-xr-x   10 sternix  staff   320B Jan  6  2021 .wasmer
--rw-r--r--    1 sternix  staff   624B Nov 12 11:21 .wget-hsts
--rw-r--r--    1 sternix  staff   116B Mar 26  2025 .yarnrc
--rw-------    1 sternix  staff    17K Oct  4  2023 .zsh_history
--rw-r--r--    1 sternix  staff    47B Mar 31  2023 .zshenv
--rw-r--r--    1 sternix  staff   415B Oct 24 09:04 .zshrc
--rw-r--r--@   1 sternix  staff   856B Nov  4 13:44 AUCPPM.cer.der
-drwx------    4 sternix  staff   128B Sep  2  2024 Applications
-drwx------@   5 sternix  staff   160B Dec 22 17:12 Desktop
-drwx------@  75 sternix  staff   2.3K Nov 27 15:45 Documents
-drwx------@ 494 sternix  staff    15K Jan  8 13:56 Downloads
-drwx------@  73 sternix  staff   2.3K Dec 23 09:00 Library
-drwx------+   7 sternix  staff   224B Dec  6  2024 Movies
-drwx------+  76 sternix  staff   2.4K Dec 26 09:02 Music
-drwxr-xr-x    2 sternix  staff    64B Mar 28  2024 NetBeansJDKs
-drwxr-xr-x    7 sternix  staff   224B Mar 18  2024 NetBeansProjects
-drwx------+   6 sternix  staff   192B Feb  2  2021 Pictures
-drwxr-xr-x+   4 sternix  staff   128B Dec 14  2020 Public
--rw-r--r--    1 sternix  staff    83B Oct 24 08:55 a.yml
--rw-r--r--    1 sternix  staff    57K Nov 11 14:50 aaa
--rw-r--r--    1 sternix  staff    70B Oct  9 09:33 abc
--rw-r--r--@   1 sternix  staff    82K Jun 30  2022 ali_lgs.pdf
-drwxr-xr-x   83 sternix  staff   2.6K Jan  8 15:39 backup
-drwxr-xr-x    2 sternix  staff    64B Oct 24 08:59 bin
--rw-r--r--    1 sternix  staff   150B Jan  7 15:16 dfghdfhgdfi
--rw-r--r--    1 sternix  staff   309B Nov 26 14:36 dfghdgfh
-drwxr-xr-x   29 sternix  staff   928B Dec 31 13:34 docs
--rw-r--r--    1 sternix  staff   249B Oct 16 11:28 fghfdhf
-drwxr-xr-x    4 sternix  staff   128B Nov  4  2024 go
--rw-r--r--    1 sternix  staff   1.6K Dec 29 11:47 log
-drwxr-xr-x@  26 sternix  staff   832B Mar 18  2024 netbeans
--rw-r--r--    1 sternix  staff    79B Feb 17  2025 pilotgarage.txt
--rw-------    1 sternix  staff   173K Oct 16 12:05 postgresql-2025-10-16_084404.log
-drwxr-xr-x  100 sternix  staff   3.1K Mar  1  2022 ppd
-drwxr-xr-x  250 sternix  staff   7.8K Jan  6 10:24 proj
-drwxr-xr-x    4 sternix  staff   128B Feb 26  2021 records
--rw-r--r--    1 sternix  staff   1.4K Oct  4  2021 redmine_tanitim.txt
--rw-r--r--    1 sternix  staff   883M Oct  3 09:28 s5mini.tar.gz
--rw-r--r--    1 sternix  staff   317M Jun 24  2025 shyo-modul-basvuru.tar.gz
-drwxr-xr-x   64 sternix  staff   2.0K Jan  7 10:36 sil
--rw-r--r--    1 sternix  staff    56K Oct 27 17:11 sonuc.txt
--rw-r--r--    1 sternix  staff   1.0K Oct  6 09:36 sunucular.txt
--rw-r--r--    1 sternix  staff    63B Oct  6 08:59 sync_docs2mac.sh
--rw-r--r--    1 sternix  staff    18K Nov  3 08:54 tmux-client-1305.log
--rw-r--r--    1 sternix  staff   1.1M Nov  3 08:54 tmux-server-1307.log
--rw-r--r--@   1 sternix  staff   655B Oct  3 09:38 yt.txt
-[sternix@sternixs-iMac ~]$ cd
-[sternix@sternixs-iMac ~]$ cd docs/docs
-[sternix@sternixs-iMac docs (main)]$ vim draft/rust.txt 
-[sternix@sternixs-iMac docs (main)]$ vim draft/rust.txt 
-
-    }
-
-    for i in 0..M {
-        for j in 0..N {
-            print!("{}", grid[i][j]);
-        }
-        println!();
-    }
-}
-
-------8<--------------------------------
-
 array oluşturma
 
 //Syntax1
@@ -2291,6 +2071,82 @@ for row in rows {
     let soyadi: String = row.get(2);
 
     println!("{}-{}-{}", id , adi , soyadi);
+}
+
+
+---------8<--------------------------
+
+TODO: örneklendir
+
+//main.rs
+mod mys;
+mod myt;
+
+// bu olmadan çalışmıyor
+// item from traits can only be used if the trait is implemented and in scope
+use crate::myt::MyT;
+
+fn main() {
+    let s = mys::MyS;
+    s.from_own();
+
+// yukarıdaki use Trait ile bu metodu çağırabiliyoruz
+    s.from_trait();
+}
+
+// myt.rs
+pub trait MyT {
+    fn from_trait(&self);
+}
+
+// mys.rs
+pub struct MyS;
+
+impl MyS {
+    pub fn from_own(&self) {
+        println!("impl S");
+    }
+}
+
+impl crate::myt::MyT for MyS {
+    fn from_trait(&self) {
+        println!("impl T for S");
+    }
+}
+
+---------8<--------------------------
+
+fn main() {
+    let even_numbers = vec![1, 2, 3, 4, 5]
+        .iter()
+        .filter(|&element| element % 2 == 0);
+}
+
+
+fn main() {
+    let even_numbers: Vec<i64> = vec![1, 2, 3, 4, 5]
+        .into_iter()
+        .filter(|element| element % 2 == 0).collect();
+}
+
+I'm using the type hint Vec<i64> here because, without it, Rust does not know what collection I want to build when calling collect.
+
+Instead of iter, I use into_iter. This way, I take ownership of the elements in the vector. With iter() I would get a Vec<&i64> instead.
+
+
+In Rust, there is no even method on numbers, but that doesn't keep us from defining one!
+
+let even = |x: &i64| x % 2 == 0;
+let even_numbers = vec![1, 2, 3, 4, 5].into_iter().filter(even);
+
+
+extern crate num;
+use num::Integer;
+
+fn main() {
+    let even_numbers: Vec<i64> = vec![1, 2, 3, 4, 5]
+        .into_iter()
+        .filter(|x| x.is_even()).collect();
 }
 
 

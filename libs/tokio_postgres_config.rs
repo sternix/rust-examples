@@ -12,7 +12,7 @@ use tokio_postgres::{Config, NoTls};
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let (client, connection) = Config::new()
         .host("localhost")
-        .user("sternix")
+        .user("test")
         .password("test")
         .dbname("test")
         .connect(NoTls)
