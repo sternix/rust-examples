@@ -2241,3 +2241,53 @@ fn test_disallow_first_strand_longer() {
 ignore olanları varsayılan olarak dikkate almıyor,
 
 ---------8<--------------------------
+
+TODO: örneklendir
+
+Entry api'si ile varmı yokmu kontrolü daha kolay
+varsa value'yu yolluyor,
+yoksa
+
+// type inference lets us omit an explicit type signature (which
+// would be `HashMap<&str, u8>` in this example).
+let mut player_stats = HashMap::new();
+
+// HashMap'in tipi <&str,u8> u8'i bu fonksiyondan alıyor
+fn random_stat_buff() -> u8 {
+    // could actually return some random value here - let's just return
+    // some fixed value for now
+    42
+}
+
+// insert a key only if it doesn't already exist
+player_stats.entry("health").or_insert(100);
+
+// insert a key using a function that provides a new value only if it
+// doesn't already exist
+player_stats.entry("defence").or_insert_with(random_stat_buff);
+
+// update a key, guarding against the key possibly not being set
+let stat = player_stats.entry("attack").or_insert(100);
+*stat += random_stat_buff();
+// burada stat mut
+
+// modify an entry before an insert with in-place mutation
+player_stats.entry("mana").and_modify(|mana| *mana += 50).or_insert(100);
+
+---------8<--------------------------
+
+map -> değer döndürüyor,
+flat_map -> iterator döndürüyor
+
+You can think of flat_map(f) as the semantic equivalent of mapping, and then flattening as in map(f).flatten().
+
+---------8<--------------------------
+
+what is the difference between clone() and to_owned()?
+
+https://stackoverflow.com/questions/22264502/in-rust-what-is-the-difference-between-clone-and-to-owned
+
+.clone() returns its receiver. clone() on a &str returns a &str.
+If you want a String, you need a different method, which in this case is .to_owned().
+
+---------8<--------------------------
