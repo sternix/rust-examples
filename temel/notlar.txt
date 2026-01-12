@@ -1,0 +1,2153 @@
+---------8<--------------------------
+
+Variable =  is an identifier used to refer memory location in computer memory that holds a value for that variable
+When you create a variable in Rust, this means you are allocating some space in the memory for that variable.
+
+Rust'da değişkenler
+let <name>;
+let <name> = <value>;
+let <name> : <type>;
+let <name> : <type> = <value>;
+
+şekillerinde tanımlanabilir
+
+---------8<--------------------------
+
+Type Inference
+
+let a = 123;
+a'nın tipi i32
+
+let b = "xyz"
+b'nin tipi &str
+
+---------8<--------------------------
+
+trait: behavior, davranış, a trait represents a capabilitity, something a type can do
+
+---------8<--------------------------
+
+The type [T;N] represents an array of N values, each of type T.
+An arrays's size is a constant determined at compile time, and is part of the type.
+you can't append new elements or shrink an array.
+
+---------8<--------------------------
+
+her fonksiyonun bildirilmese bile bir dönüş tipi var,
+eğer bir tip bildirilmezse -> () şeklinde
+() : Unit yada Empty Tuple, Unit Type:
+This is traditionally called the Unit Type because it has only one value also written (). Rust uses the unit type where there's no meaningful value to carry. For example, a function that returns no value has a return type of ().
+
+---------8<--------------------------
+
+Return type
+Result<(), std::io::Error>
+meaning that the function returns a std::io::Error value if something goes wrong,
+but returns no value on success
+
+---------8<--------------------------
+
+pretty print
+
+println!("{:#?}", res);
+
+---------8<--------------------------
+
+let array = [1,2,3]
+let tuple = (1,'a',true);
+let slice = array[1..2];
+
+Slice = Memory view of an array
+Tuple = Ordered sequence of comma-separated values
+
+---------8<--------------------------
+
+const tanımlarken tiplerini mutlaka bildirmeliyiz
+const her scope'da tanımlanabilir.
+
+---------8<--------------------------
+
+Raw pointers
+
+*const T
+* mut T
+
+- unsafe
+- gösterdikleri hafıza null olabilir
+- otomatik drop yapmazlar
+- ownership yok
+- lifetime yok
+
+---------8<--------------------------
+
+cargo run --features x,y,z
+
+// kodda ifdef gibi conditional kod yazabiliriz
+if cfg!(feature = "x") {
+
+}
+
+cargo build --release --features 'xyz'
+
+---------8<--------------------------
+
+serde için
+
+pub struct PageNewKisi {
+    adi: String,
+    soyadi: String,
+    #[serde(skip_deserializing)]
+    err_adi: bool,
+    #[serde(skip_deserializing)]
+    err_adi_message: String,
+    #[serde(skip_deserializing)]
+    err_soyadi: bool,
+    #[serde(skip_deserializing)]
+    err_soyadi_message: String,
+    btn: String,
+}
+
+---------8<--------------------------
+
+0usize
+0_usize
+0_i32
+0_u32
+0_u8
+
+değerden tip vermek
+
+---------8<--------------------------
+
+assert_eq!(x,y,"oh no");
+
+anlamına geliyor
+
+if x != y {
+    panic("assertion {} == {} failed",x,y);
+}
+
+---------8<--------------------------
+
+#[cfg(test)] // only compiles in test mode
+...
+
+#[test] // this function is a test
+fn it_works() {
+    assert!(true); // if this function panics, test fails
+}
+
+rustc --test testing.rs
+this tells rustc to compile your tests and replaces main function with a test runner
+try it out ./testing
+
+---------8<--------------------------
+
+r"str" => raw string
+b"str" => byte string
+b'c' => byte char
+br#"hello"# => raw byte string
+
+---------8<--------------------------
+
+while let Some(stream) = incoming.next() {
+    .... None olanlara bakmıyor gelenlerden Some olanlara bakıyor
+}
+
+---------8<--------------------------
+
+normalde derleyici fonksiyon isimlerini değiştiriyor
+değiştirmemesi için
+
+#[no_mangle]
+pub extern "C" fn_start() -> ! {
+    loop{}
+}
+
+#![no_std] // don't link the rust standard library
+#![no_main] // disable all rust level entry points
+
+---------8<--------------------------
+
+mut = mutability = write + ability
+
+---------8<--------------------------
+
+tüm operatörler bir trait'e bakıyor
+
++=
+std::ops::AddAssign
+
++
+std::ops::Add
+
+---------8<--------------------------
+
+The relationship between Rust arrays and slices is similar to that between C arrays and pointers, except for two important differences - Rust slices keep track of their size (and will panic if you try to access outside that size) and you have to explicitly say that you want to pass an array as a slice using the & operator.
+
+A C programmer pronounces & as 'address of'; a Rust programmer pronounces it 'borrow'. This is going to be the key word when learning Rust. Borrowing is the name given to a common pattern in programming; whenever you pass something by reference (as nearly always happens in dynamic languages) or pass a pointer in C. Anything borrowed remains owned by the original owner.
+
+---------8<--------------------------
+
+This is a neat notation which looks similar to Python slices but with a big difference: a copy of the data is never made. These slices all borrow their data from their arrays.
+
+Slices give you different views of the same array.
+A copy of data is never made, these slices all borrow
+their data from their arrays.
+
+---------8<--------------------------
+
+Panic happens when the original problem happens, not when the program has become hopelessly confused
+and eaten all your homework. Panics are memory safe because they happen before any illegal access to memory.
+This is a common cause of security problems in C, because all memory accesses are unsafe and a cunning attacher can
+expoit this weakness.
+
+Panicking sounds desperate and unplanned, but Rust panics are structured, the stack is unwound just aswith exceptions.
+All allocated objects are dropped and a backtrace is generated.
+
+!!!!
+illegal bir pointer işleminde İşletim sistemi kendini korumak için Segfault hataları verir.
+eğer bu hatayı vermez ise işletim sistemi göçme ile yüzyüze kalabilir. fakat bu en son noktadır.
+eğer program içinde illegal bir işlem olduğu anlaşılırsa program işletim sistemine gerek kalmadan
+kendini sonlandırabilir bu işleme panic diyoruz.
+
+---------8<--------------------------
+
+"hello" => &str => string slice => const char *
+"hello".to_string() => String => String nesnesi => std::string
+
+---------8<--------------------------
+
+string'ler indekslenemez
+
+// hata
+fn main() {
+    let str = "test";
+    println!("{}", str[0]);
+}
+
+---------8<--------------------------
+
+match yapısında tüm olasılıkların belirtilmesi gerekiyor
+yada beklenen olasılıklar ve _ ile olabilecek diğer olasılıkları belirtiyor
+olasılıklar match'ın tipine göre değişiyor
+
+ör bool bir match ya true yada false olur
+int tüm int tipleri
+enum enum'un tüm değerleri vs
+
+---------8<--------------------------
+
+Eğer debug buildde integer overflow olursa program panic'liyor,
+fakat release build'de sayı başa dönüyor, ör: u8'de 256 -> 0, 257 -> 1 değerini alıyor.
+
+---------8<--------------------------
+
+byte diye bir tip yok onun yerine -> u8
+
+---------8<--------------------------
+
+&T : immutable reference like const T* in C
+&mut T : mutable reference like T* in C
+
+---------8<--------------------------
+
+[T] : Slice
+&[T] : Reference to slice
+
+---------8<--------------------------
+
+iterate: yinelemek, tekrarlamak
+
+iterator: yenileyici, tekrarlayıcı
+
+iterator: In computer science, an iterator is an object that allows a programmer to traverse through all the elements of a collection, regardless of its specific implementation. An iterator is sometimes called a cursor, especially within the context of a database
+
+---------8<--------------------------
+
+iterator değil vec için
+
+swap_remove
+
+vec'den bir elemanı almak, alınan yerine son elemanı koymak
+
+vec.swap_remove(index);
+vec.remove()'dan farkı sıra önemli değil,
+çıkan eleman yerine son elemanı koyuyor
+
+
+fn take<T>(mut vec: Vec<T>, index: usize) -> Option<T> {
+    if vec.get(index).is_none() {
+        None
+    } else {
+        Some(vec.swap_remove(index))
+    }
+}
+
+---------8<--------------------------
+
+Every type in Rust has a lifetime, including i32 and String. Most are simply 'static, meaning that values of those types
+can live for as long as you like; for example a Vec<i32> is a self-contained, and needn't be dropped before any particular variable
+goes out of scope. But a type like Vec<&'a i32> has a lifetime that must be enclosed by 'a: it must be dropped while its referents are still alive
+
+if your function doesn't return any references (or other types that require lifetime parameters),
+then you never need to write out lifetime for your parameters.
+
+---------8<--------------------------
+
+
+---------8<--------------------------
+ran
+0..20 => std::ops::Range{start: 0, end: 20};
+
+---------8<--------------------------
+
+.. RangeFull
+a.. RangeFrom{start:a }
+..b RangeTo{end: b}
+a..b Range{start:a, end:b}
+
+Rust Ranges are half open: they include the start value, if any but not the end value.
+The range 0..4 includes the numbers 0,1,2,3.
+
+Only ranges that include a start value are iterable, since a loop must have somewhere to start.
+But in array slicing, all four forms are useful. If the start or end of the range is omitted,
+it defaults to the start or end of the data being sliced.
+
+---------8<--------------------------
+
+nonstatic methods are called on values, like my_vec.len()
+static methods are called on types like Vec::new()
+
+---------8<--------------------------
+
+return Vec<i32>::with_capacity(10); // <- HATA
+return Vec::<i32>::with_capacity(10) // DOĞRU
+
+let ramp = (0..n).collect<Vec<i32>>(); // <- HATA
+let ramp = (0..n).collect::<Vec<i32>>(); // DOĞRU
+
+yada kısaca
+
+// fonksiyonun dönüş değerinden tipi buluyor
+return Vec::with_capacity(10);
+
+// ramp'ın tipinden infer ediyor.
+let ramp: Vec<i32> = (0..n).collect();
+
+The symbol ::<...> is known as the turbofish
+
+---------8<--------------------------
+
+Bitwise operators have higher precedence than comparisons,
+unlike C, so if you write
+x & BIT != 0
+that means
+(x & BIT) != 0, as you probably intended,
+This is much more usual than C's interpretation
+X & (BIT != 0) which tests the wrong bit
+
+---------8<--------------------------
+
+Unlike C, Rust doesn't support chaining assignment,
+you can't write a = b = 3 to assign the value 3 to both a and b
+
+---------8<--------------------------
+
+Rust does no have C's increment and decrement operators ++ and --
+
+---------8<--------------------------
+
+Values of type &String auto-convert to type &str without a cast
+Values of type &Vec<i32> auto-convert to &[i32]
+Values of type &Box<T> auto-convert to &T
+
+these are called deref coercions, because they apply to types that implement Deref buildin trait
+The purpose of Deref coercion is to make smart pointer types, like Box, behave as much like the underlying
+value as possible. Using a Box<T> is mostly just like using a plain T, thanks to Deref
+
+---------8<--------------------------
+
+CamelCase
+snake_case
+
+---------8<--------------------------
+
+Unit struct
+struct Xyz;
+
+hiç bir alanı olmayan bir struct, fakat method tanımlanabilir.
+A value of such a type occupies no memory, much like the unit type ()
+
+---------8<--------------------------
+
+struct X;
+
+impl X {
+    fn method() -> Self {}
+    fn method() -> X {}
+
+    // ikiside aynı
+}
+
+---------8<--------------------------
+
+all constructors and fields of a public enum are automatically public.
+
+---------8<--------------------------
+
+Patterns that always match are special in Rust. They are called irrefutable patterns,.
+
+---------8<--------------------------
+
+Fat pointer hem nesnenin, hem de vtable'ın adresini tutan pointerlar
+
+---------8<--------------------------
+
+In Rust, as in C++, the vtable is generated once, at compile time, and shared by all objects of the same type.
+
+in C++, the vtable pointer, or vptr, is stored as part of the struct, Rust uses a fat pointers instead. The struct itself contains nothing but its fields. This way,a struct can implement dozens of traits without containing dozens of vptrs.
+
+Rust automatically converts ordinary references into trait objects when needed.
+
+---------8<--------------------------
+
+traitlerde Self, o trait'i implemente eden tipe karşılık geliyor
+
+---------8<--------------------------
+
+int ve float tiplerin Default implementasyonu 0'dır
+
+---------8<--------------------------
+
+Bir trait'i use ile scope'a aldığımızda o trait'in metodları görünür olur.
+
+---------8<--------------------------
+
+std::ops::Neg => -x => x.neg()
+std::ops::Not => !x => x.not()
+
+std::ops::Add => x + y => x.add(y)
+std::ops::Sub => x - y => x.sub(y)
+std::ops::Mul => x * y => x.mul(y)
+std::ops::div => x / y => x.div(y)
+std::ops::Rem => x % y => x.rem(y)
+
+
+trait Add<RHS=Self> {
+    type Output;
+    fn add(self, rhs: RHS) -> Self::Output;
+}
+
+std::ops::BitAnd => x & y  => x.bitand(y)
+std::ops::BitOr  => x | y  => x.bitor(y)
+std::ops::BitXor => x ^ y  => x.bitxor(y)
+std::ops::Shl    => x << y => x.shl(y)
+std::ops::Shr    => x >> y => x.shr(y)
+
+
+---------8<--------------------------
+
+matematikte bir şeyin eşitliği için 3 şartı sağlamalı
+1- x == y ise y == x olmalı
+2- x == y , y == z ise x == z sağlanmalı
+3- x == x sağlanmalı
+
+---------8<--------------------------
+
+f32 ve f64 tipleri
+
+assert_eq!(f64::is_nan(0.0 / 0.0));
+assert_eq!(0.0 / 0.0 == 0.0 / 0.0);
+
+gibi 3. şartı sağlamadıkları için
+f32 ve f64 std::cmp::Eq yerine std::cmp::PartialEq
+trait'ini implemente ediyor.
+
+3 şartıda sağlayan std::cmp::Eq trait'ini impl
+edebilir. yada
+#[derive(Eq)] edebilir
+
+
+The standart library defines Eq as an extension of PartialEq,
+adding no new methods:
+
+trait Eq: PartialEq<Self> {}
+
+---------8<--------------------------
+
+The only method of PartialOrd you must implement yourself is partial_cmp. When partial_cmp returns Some(o), then indicates self's relationship to other.
+
+std::cmp::Ordering
+
+enum Ordering {
+    Less, // self < other
+    Equal, // self == other
+    Greater, // self > other
+}
+
+---------8<--------------------------
+
+*a.index(i) => a[i]
+*a.index_mut(i) => mutable olan a için a[i]
+*a.index(std::ops::Range {start: i, end: j}) => a[i..j]
+
+---------8<--------------------------
+
+We said earlier that when you implement a trait, either the trait or the type must be new in the current crate. This is called coherence rule (Tutarlılık kuralı). It helps Rust ensure that trait implementations are unique. Your code can't impl Write for u8, because both Write and u8 are defined in the standart library.
+
+---------8<--------------------------
+
+Utility Traits
+
+Drop: Destructors, Cleanup code that Rust runs automatically whenever a value is dropped.
+
+Sized: Marker trait for types with a fixed size known at compile time, as opposed to types (such as slices) that are dynamically sized.
+
+Clone: Types that support cloning values.
+
+Copy: Marker trait for types that can be cloned simply by making a byte-for-byte copy of the memory containing the value.
+
+Deref and DerefMut: Traits for smart pointer types.
+
+Default: Types that have a sensible(makul) "default value"
+
+AsRef and AsMut: Conversion traits for borrowing one type of reference from another.
+
+Borrow and BorrowMut: Conversion traits, like AsRef/AsMut, but additionally guaranteeing consistent hashing, ordering, and equality.
+
+From and Into: Conversion traits for transforming one type of value into another.
+
+ToOwned: Conversion trait for converting a reference to an owned value.
+
+---------8<--------------------------
+
+A sized type is one whose values all have same size in memory. Almost all types in Rust are sized: every u64 takes eight bytes, every (f32,f32,f32) tuple twelve. Even enums are sized: no matter which variant is actually present, an enum always occupies enough space to hold its largest variant. And although a Vec<T> owns a heap-allocated buffer whose size can vary, the Vec value itself is a pointer to the buffer, its capacity, and length, so Vec<T> is a sized type.
+
+However, Rust also has a few unsized types whose values are not all the same size. For example, the string slice type str (note, without an &) is unsized. The string literals "diminutive" and "big" are references to str slices that occupy ten and three bytes. Array slice types like [T] (again, without an &) are unsized, too: a shared reference like &[u8] can point to a [u8] slice of any size. Because the str and [T] types denote sets of values of varying sizes, they are unsized types.
+
+str tipi unsized - değişkene göre tipin uzunluğu değişiyor.
+
+fakat &str Sized - tip hafızada bir ptr ve bir length alanı olan bir struct - yada fat pointer, hangi değişken atanırsa atansın sonuçta size olarak değişecek birşey yok.
+
+
+The other common kind of unsized type in Rust is the referent of a trait object. A trait object is a pointer to some value that implements a given trait. For example, the types &std::io::Write and Box<std::io::Write> are pointers to some value that implements the Write trait. The referent might be a file, or a network socket, or some type of your own for which you have implemented Write. Since the set of types that implement Write is open-ended, Write considered as a type is unsized: its values have various sizes.
+
+Rust can't store unsized values in variables or pass them as arguments. You can only deal with them through pointers like &str or Box<Write>, which themselves are sized.
+
+A pointer to an unsized value is always a fat pointer, two words wide: a pointer to a slice also carries the slice's length, and a trait object also carries a pointer to a vtable of method implementations.
+
+All sized types implement std::marker::Sized trait
+
+Rust itself uses marker traits to mark certain types as having characteristics of interest.
+
+Most generic type variables should be restricted to Sized types. In fact, this is necessary so often that it is the implicit default in Rust: if you write struct S<T> {}, Rust understands you to mean struct S<T: Sized> {}. Iy you do not want to constrain T this way, you must explicitly optout, writing struct S<T: ?Sized> {}. The ?Sized syntax is specific to this case, and means "not necessary Sized". For example if you write struct S<T: ?Sized> {b: Box<T> } then Rust will allow you to write S<str> and S<Write>, where the box becomes a fat pointer, as well as S<i32> and S<String>, where the box is an ordinary pointer.
+
+
+---------8<--------------------------
+
+eğer Struct'ın tüm alanları Default'u impl etmişse
+
+#[derive(Default)]
+struct Xyz {}
+
+ile struct'ın Default'u impl etmesini sağlayabiliriz.
+
+---------8<--------------------------
+
+All of a vector's elements are stored in a continuous, heap-allocated chunk of memory. The capacity of a vector is the maximum number of elements that would fit in this chunk. Vec normally manages the capacity for you, automatically allocating a larger buffer and moving the elements into it when more space is needed. There are also a few methods for managing capacity explicitly.
+
+Vec::with_capacity(n), creates a new, empty vector with capacity n.
+
+---------8<--------------------------
+
+BTreeMap HashMap'in
+capacity, with_capacity, reserve, shrink_to_fit vs hariç diğer tüm metodlarına sahip
+
+---------8<--------------------------
+
+The four std::io:: traits Read, BufRead, Write and Seek are so commonly used that there's a prelude module containing only those traits:
+
+use std::io::prelude::*;
+
+---------8<--------------------------
+
+use std::io::{self ...}
+
+The self keyword here declares io as an alias to the std::io module. That way, std::io::Result and std::io::Error can be written more concisely as io::Result and io::Error, and so on.
+
+---------8<--------------------------
+
+fn f(c: &City) -> bool
+
+|city| city.x > 0
+
+tipleri farklı
+
+fakat generic ifade ile
+
+fn fnx<F>(f: F)
+    where F: Fn(&City) -> bool
+{}
+
+ile hem fonksiyon hem closure bu fonksiyona parametre olarak verilebilir.
+
+---------8<--------------------------
+
+A closure is callable, but it's not a fn. The closure
+|city| city.monster_attack_risk > limit
+has its own type that's not a fn type.
+
+---------8<--------------------------
+
+RUST_BACKTRACE=full ./diverges
+RUST_BACKTRACE=full cargo run
+
+fn diverges() -> ! {
+    panic!("This function never returns!");
+}
+
+A diverging function can be used as any type:
+
+let x: i32 = diverges();
+let x: String = diverges();
+
+---------8<--------------------------
+
+for s in vec.iter() {...} // &String
+for s in vec.iter_mut() {...} // &mut String
+for s in vec.into_iter() {...} // String
+
+// implicit!
+for s in &vec {...} // &String
+for s in &mut vec {...} // &mut String
+for s in vec {...} // String
+
+for x in &v {...} // returns &T
+for x in &mut v {...} // returns &mut T
+for x in v {...} // returns T, consumes v
+
+---------8<--------------------------
+
+rustc --print $PARAM
+
+PARAM'lar
+sysroot
+cfg
+target-list
+target-cpus
+target-features
+relocation-models
+code-models
+tls-models
+
+olabilir
+
+---------8<--------------------------
+
+foo(mutex_string.lock().clone()); // Drop guard at the end of foo.
+
+let s = mutex_string.lock().clone(); // Drop guard before foo.
+foo(s);
+
+---------8<--------------------------
+
+#!/usr/bin/env bash
+set -e
+cargo watch -x test -x clippy -x "fmt -- --write-mode=diff"
+
+---------8<--------------------------
+Cargo.toml'da absolute path kullanmak
+
+dosya sisteminde proje olan bir dizini path ile kullanabiliriz
+
+[dependencies]
+tokio = { version = "0.2", features = ["macros"] }
+#warp = "0.2"
+warp = { path = "/home/test/pub/warp"}
+
+git repo
+yada relative dir
+
+[dependencies]
+clap = "2.27.1" # from crates.io
+rand = { git = "https://github.com/rust-lang-nursery/rand" } # from online repo
+bar = { path = "../bar" } # from a path in the local filesystem
+
+Cargo.toml'da path tanımlama (relative)
+deadpool-postgres = { version = "0.5.0", path = "../../postgres" }
+
+---------8<--------------------------
+
+cargo'ya linker path vermek için
+
+setenv RUSTFLAGS '-L /usr/local/lib'
+cargo build
+yada
+cargo run
+
+---------8<--------------------------
+
+TODO: örnek yaz
+
+extern crate bcrypt;
+
+use bcrypt::{DEFAULT_COST, hash, verify};
+
+let hashed = hash("hunter2", DEFAULT_COST)?;
+let valid = verify("hunter2", &hashed)?;
+
+DEFAULT_COST is 12
+
+---------8<--------------------------
+
+rust vim plugin
+
+git clone https://github.com/rust-lang/rust.vim ~/.vim/pack/plugins/start/rust.vim
+
+---------8<--------------------------
+
+örnek Cargo.toml release ve debug profilleri
+```
+
+bu debug build oluyor
+
+[profile.dev]
+panic = "unwind"
+strip = true  # Automatically strip symbols from the binary.
+
+unwind'i kaldırmak
+[profile.release]
+panic = "abort"
+
+[profile.release]
+panic = "unwind"
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+```
+
+```
+[profile.release]
+opt-level = "z"  # Optimize for size.
+```
+
+```
+[profile.release]
+lto = true
+```
+
+[profile.release]
+opt-level = "z"  # Optimize for size.
+
+[profile.release]
+lto = true
+
+
+```
+[profile.release.package."*"]
+codegen-units = 1
+opt-level = 3
+```
+
+```
+[profile.release]
+opt-level = 3
+lto = true
+```
+
+Cargo.toml
+```
+[profile.release]
+opt-level = 3
+lto=true
+codegen-units = 1
+panic = 'abort'
+strip = "symbols"
+```
+
+[profile.release.package."*"]
+codegen-units = 1
+opt-level = 3
+
+[profile.release]
+opt-level = 3
+lto = true
+
+
+https://github.com/stoolap/stoolap/blob/main/Cargo.toml
+
+```
+[profile.release]
+lto = true
+codegen-units = 1
+panic = "abort"
+opt-level = 3
+debug = true  # Enable debug symbols for profiling
+
+[profile.bench]
+lto = true
+codegen-units = 1
+
+# CI test profile: faster compile, less disk usage
+[profile.ci]
+inherits = "release"
+lto = "thin"          # Much faster than full LTO
+codegen-units = 16    # Parallel codegen
+debug = false         # No debug symbols needed for tests
+```
+
+---------8<--------------------------
+
+cargo build --features "base32 cat echo rm" --no-default-features
+
+---------8<--------------------------
+
+// Coercion
+
+fn foo(a: &[i32]) {
+    // code
+}
+
+fn bar(s: &str) {
+    // code
+}
+
+let v = vec![1, 2, 3];
+foo(&v); // &Vec<i32> coerces into &[i32] because Vec<T> impls Deref<Target=[T]>
+
+let s = "Hello world".to_string();
+let rc = Rc::new(s);
+// This works because Rc<T> impls Deref<Target=T> ∴ &Rc<String> coerces into
+// &String which coerces into &str. This happens as much as needed at compile time.
+bar(&rc);
+
+---------8<--------------------------
+
+dot operator
+
+let mut name: String = "hello world".to_string();
+// no deref happens here because push is defined in String itself
+name.push('!');
+
+let name_ref: &String = &name;
+// Auto deref happens here to get to the String. See below
+let name_len = name_ref.len();
+// You can think of this as syntactic sugar for the following line:
+let name_len2 = (*name_ref).len();
+
+// Because of how the deref rules work,
+// you can have an arbitrary number of references.
+// The . operator is clever enough to know what to do.
+let name_len3 = (&&&&&&&&&&&&name).len();
+assert_eq!(name_len3, name_len);
+
+---------8<--------------------------
+
+// lambda expressions can have explicitly annotated return types
+let floor_func = |x: f64| -> i64 { x.floor() as i64 };
+
+---------8<--------------------------
+
+// This function takes two integers and a function that performs some operation on the two arguments
+fn apply_function<T>(a: i32, b: i32, func: T) -> i32 where T: Fn(i32, i32) -> i32 {
+    // apply the passed function to arguments a and b
+    func(a, b)
+}
+
+// let's define three lambdas, each operating on the same parameters
+let sum = |a, b| a + b;
+let product = |a, b| a * b;
+let diff = |a, b| a - b;
+
+// And now let's pass them to apply_function along with some arbitary values
+println!("3 + 6 = {}", apply_function(3, 6, sum));
+println!("-4 * 9 = {}", apply_function(-4, 9, product));
+println!("7 - (-3) = {}", apply_function(7, -3, diff));
+
+---------8<--------------------------
+
+Returning lambdas (or closures) from functions can be tricky because they implement traits and thus their exact size is rarely known.
+
+// Box in the return type moves the function from the stack to the heap
+fn curried_adder(a: i32) -> Box<Fn(i32) -> i32> {
+    // 'move' applies move semantics to a, so it can outlive this function call
+    Box::new(move |b| a + b)
+}
+
+println!("3 + 4 = {}", curried_adder(3)(4));
+
+---------8<--------------------------
+
+// variable definition outside the lambda expression...
+let lucky_number: usize = 663;
+
+// but the our function can access it anyway, thanks to the closures
+let print_lucky_number = || println!("{}", lucky_number);
+
+// finally call the closure
+print_lucky_number();
+
+---------8<--------------------------
+
+// A simple adder function defined as a lambda expression.
+// Unlike with regular functions, parameter types often may be omitted because the
+// compiler can infer their types
+let adder = |a, b| a + b;
+// Lambdas can span across multiple lines, like normal functions.
+let multiplier = |a: i32, b: i32| {
+    let c = b;
+    let b = a;
+    let a = c;
+    a * b
+};
+
+// Since lambdas are anonymous functions, they can be called like other functions
+println!("{}", adder(3, 5));
+println!("{}", multiplier(3, 5));
+
+---------8<--------------------------
+
+AsRef and Borrow are similar but serve distinct purposes. Borrow is used to treat multiple borrowing methods similarly, or to treat borrowed values like their owned counterparts, while AsRef is used for genericizing references.
+
+From<A> for B implies Into<B> for A, but not vice-versa.
+From<A> for A is implicitly implemented.
+
+---------8<--------------------------
+
+TODO örnek yaz
+
+use std::error::Error;
+use std::fmt;
+use std::convert::From;
+use std::io::Error as IoError;
+use std::str::Utf8Error;
+
+#[derive(Debug)] // Allow the use of "{:?}" format specifier
+enum CustomError {
+    Io(IoError),
+    Utf8(Utf8Error),
+    Other,
+}
+
+// Allow the use of "{}" format specifier
+impl fmt::Display for CustomError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match *self {
+            CustomError::Io(ref cause) => write!(f, "I/O Error: {}", cause),
+            CustomError::Utf8(ref cause) => write!(f, "UTF-8 Error: {}", cause),
+            CustomError::Other => write!(f, "Unknown error!"),
+        }
+    }
+}
+
+// Allow this type to be treated like an error
+impl Error for CustomError {
+    fn description(&self) -> &str {
+        match *self {
+            CustomError::Io(ref cause) => cause.description(),
+            CustomError::Utf8(ref cause) => cause.description(),
+            CustomError::Other => "Unknown error!",
+        }
+    }
+
+    fn cause(&self) -> Option<&Error> {
+        match *self {
+            CustomError::Io(ref cause) => Some(cause),
+            CustomError::Utf8(ref cause) => Some(cause),
+            CustomError::Other => None,
+        }
+    }
+}
+
+// Support converting system errors into our custom error.
+// This trait is used in `try!`.
+impl From<IoError> for CustomError {
+    fn from(cause: IoError) -> CustomError {
+        CustomError::Io(cause)
+    }
+}
+impl From<Utf8Error> for CustomError {
+    fn from(cause: Utf8Error) -> CustomError {
+        CustomError::Utf8(cause)
+    }
+}
+
+---------8<--------------------------
+
+TODO örnek yaz
+use std::error::Error;
+
+let orig_error = call_returning_error();
+
+// Use an Option<&Error>. This is the return type of Error.cause().
+let mut err = Some(&orig_error as &Error);
+
+// Print each error's cause until the cause is None.
+while let Some(e) = err {
+    println!("{}", e);
+    err = e.cause();
+}
+
+
+---------8<--------------------------
+
+The bounds must cover all uses of the type. Addition is done by the std::ops::Add trait, which has input and output parameters itself. where T: std::ops::Add<u32,Output=U> states that it's possible to Add T to u32, and this addition has to produce type U.
+
+fn try_add_one<T, U>(input_value: T) -> Result<U, String>
+    where T: std::ops::Add<u32,Output=U>
+{
+    return Ok(input_value + 1);
+}
+
+---------8<--------------------------
+
+// Generic types are declared using the <T> annotation
+
+struct GenericType<T> {
+    pub item: T
+}
+
+enum QualityChecked<T> {
+    Excellent(T),
+    Good(T),
+    // enum fields can be generics too
+    Mediocre { product: T }
+}
+
+------8<--------------------------------
+
+Generic functions
+
+fn convert_values<T, U>(input_value: T) -> Result<U, String> {
+  // Try and convert the value.
+  // Actual code will require bounds on the types T, U to be able to do something with them.
+}
+
+If the compiler can't infer the type parameter then it can be supplied manually upon call:
+
+let result: Result<u32, String> = convert_value::<f64, u32>(13.5);
+
+---------8<--------------------------
+
+#![feature(asm)]
+
+// Any valid x86 code is valid for x86_64 as well. Be careful
+// not to write x86_64 only code while including x86 in the
+// compilation targets!
+#[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
+fn do_nothing() {
+    unsafe {
+        asm!("NOP");
+    }
+}
+
+#[cfg(not(any(target_arch = "x86", target_arch = "x86_64"))]
+fn do_nothing() {
+    // This is an alternative implementation that doesn't use any asm!
+    // calls. Therefore, it should be safe to use as a fallback.
+}
+
+---------8<--------------------------
+
+#![feature(asm)]
+
+#[cfg(any(target_arch="x86", target_arch="x86_64"))]
+fn subtract(first: i32, second: i32) {
+   unsafe {
+        // Output values must either be unassigned (let result;) or mutable.
+        let result: i32;
+        // Each value that you pass in will be in a certain register, which
+        // can be accessed with $0, $1, $2...
+        //
+        // The registers are assigned from left to right, so $0 is the
+        // register containing 'result', $1 is the register containing
+        // 'first' and $2 is the register containing 'second'.
+        //
+        // Rust uses AT&T syntax by default, so the format is:
+        // SUB source, destination
+        // which is equivalent to:
+        // destination -= source;
+        //
+        // Because we want to subtract the first from the second,
+        // we use the 0 constraint on 'first' to use the same
+        // register as the output.
+        // Therefore, we're doing:
+        // SUB second, first
+        // and getting the value of 'first'
+
+        asm!("SUB $2, $0" : "=r"(result) : "0"(first), "r"(second));
+        println!("{}", result);
+    }
+}
+
+---------8<--------------------------
+
+fn do_nothing() {
+    unsafe {
+        asm!("NOP");
+    }
+
+    // asm!("NOP");
+    // That would be invalid here, because we are no longer in an
+    // unsafe block.
+}
+
+---------8<--------------------------
+
+fn is_prime(n: u64) -> bool {
+    (2..n).all(|divisor| n % divisor != 0)
+}
+
+(2..n)
+    .take_while(|divisor| divisor * divisor <= n)
+    .all(|divisor| n % divisor != 0)
+
+---------8<--------------------------
+
+(2..n)
+    .take_while(|divisor| divisor * divisor <= n)
+    .all(|divisor| n % divisor != 0);
+
+---------8<--------------------------
+
+struct Fibonacci(u64, u64);
+
+impl Iterator for Fibonacci {
+    type Item = u64;
+
+    // The method that generates each item
+    fn next(&mut self) -> Option<Self::Item> {
+        let ret = self.0;
+        self.0 = self.1;
+        self.1 += ret;
+
+        Some(ret) // since `None` is never returned, we have an infinite iterator
+    }
+
+    // Implementing the `next()` method suffices since every other iterator
+    // method has a default implementation
+}
+
+// the iterator method `take()` is an adapter which limits the number of items
+// generated by the original iterator
+for i in Fibonacci(0, 1).take(10) {
+    println!("{}", i);
+}
+
+---------8<--------------------------
+
+Loops
+
+loop { block } // infinite loop
+while condition { block }
+while let pattern = expr { block }
+for pattern in expr { block } // expr must implement IntoIterator
+continue // jump to the end of the loop body, starting a new iteration if necessary
+break // stop the loop
+'label: loop { block }
+'label: while condition { block }
+'label: while let pattern = expr { block }
+'label: for pattern in expr { block }
+continue 'label // jump to the end of the loop body labelled label, starting a new iteration if necessary
+break 'label // stop the loop labelled label
+
+---------8<--------------------------
+
+Pattern-matched While Loops
+
+These are sometimes known as while let loops for brevity.
+
+let mut x = Some(0);
+while let Some(v) = x {
+    println!("{}", v);
+    x = if v < 3 { Some(v + 1) }
+        else     { None };
+}
+
+This is equivalent to a match inside a loop block:
+
+let mut x = Some(0);
+loop {
+    match x {
+        Some(v) => {
+            println!("{}", v);
+            x = if v < 3 { Some(v + 1) }
+                else     { None };
+        }
+        _       => break,
+    }
+}
+
+---------8<--------------------------
+
+Option as_mut
+
+pub fn as_mut(&mut self) -> Option<&mut T>
+
+Converts from &mut Option<T> to Option<&mut T>.
+
+---------8<--------------------------
+
+None's type
+
+None:<i32>;
+
+şeklinde bir tip verebiliriz
+
+// Binding `None` to a variable needs to be type annotated
+    let none: Option<i32> = None;
+    let _equivalent_none = None::<i32>;
+
+---------8<--------------------------
+
+cargo build --offline
+
+crate'leri update etmeden build yapmaya çalışır
+eğer bağımlı bir crate ~/.cargo/registry
+dizininde yoksa derleyemeyebilir
+
+---------8<--------------------------
+
+thowaway ('_) lifetime:
+
+impl Iterator for DataIter<'_> { ... }
+
+---------8<--------------------------
+
+eğer programda print!() kullanılıp en sonunda println!()
+kullanılmamışsa çıktının sonunda % gibi işaretler bulunabilir.
+ya println!() yada stdout'un flush edilmesi gerekiyor
+
+---------8<--------------------------
+
+TODO: örnek yaz
+
+https://stackoverflow.com/questions/31192956/whats-the-de-facto-way-of-reading-and-writing-files-in-rust-1-x
+
+Read a file to a String
+
+use std::fs;
+
+fn main() {
+    let data = fs::read_to_string("/etc/hosts").expect("Unable to read file");
+    println!("{}", data);
+}
+
+
+Read a file as a Vec<u8>
+
+use std::fs;
+
+fn main() {
+    let data = fs::read("/etc/hosts").expect("Unable to read file");
+    println!("{}", data.len());
+}
+
+Write a file
+
+use std::fs;
+
+fn main() {
+    let data = "Some data!";
+    fs::write("/tmp/foo", data).expect("Unable to write file");
+}
+
+
+Read a file to a String
+
+use std::fs::File;
+use std::io::Read;
+
+fn main() {
+    let mut data = String::new();
+    let mut f = File::open("/etc/hosts").expect("Unable to open file");
+    f.read_to_string(&mut data).expect("Unable to read string");
+    println!("{}", data);
+}
+
+
+Read a file as a Vec<u8>
+
+use std::fs::File;
+use std::io::Read;
+
+fn main() {
+    let mut data = Vec::new();
+    let mut f = File::open("/etc/hosts").expect("Unable to open file");
+    f.read_to_end(&mut data).expect("Unable to read data");
+    println!("{}", data.len());
+}
+
+Write a file
+
+use std::fs::File;
+use std::io::Write;
+
+fn main() {
+    let data = "Some data!";
+    let mut f = File::create("/tmp/foo").expect("Unable to create file");
+    f.write_all(data.as_bytes()).expect("Unable to write data");
+}
+
+use std::fs::File;
+use std::io::{BufReader, Read};
+
+fn main() {
+    let mut data = String::new();
+    let f = File::open("/etc/hosts").expect("Unable to open file");
+    let mut br = BufReader::new(f);
+    br.read_to_string(&mut data).expect("Unable to read string");
+    println!("{}", data);
+}
+
+
+
+use std::fs::File;
+use std::io::{BufWriter, Write};
+
+fn main() {
+    let data = "Some data!";
+    let f = File::create("/tmp/foo").expect("Unable to create file");
+    let mut f = BufWriter::new(f);
+    f.write_all(data.as_bytes()).expect("Unable to write data");
+}
+
+
+use std::fs::File;
+use std::io::{BufRead, BufReader};
+
+fn main() {
+    let f = File::open("/etc/hosts").expect("Unable to open file");
+    let f = BufReader::new(f);
+
+    for line in f.lines() {
+        let line = line.expect("Unable to read line");
+        println!("Line: {}", line);
+    }
+}
+
+use std::fs::OpenOptions;
+
+fn main() {
+    let data = "Some data!\n";
+    let mut f = OpenOptions::new()
+        .append(true)
+        .create(true) // Optionally create the file if it doesn't already exist
+        .open("/tmp/foo")
+        .expect("Unable to open file");
+    f.write_all(data.as_bytes()).expect("Unable to write data");
+}
+
+
+use std::io::{BufWriter, Write};
+use std::fs::OpenOptions;
+
+fn main() {
+    let data = "Some data!\n";
+    let f = OpenOptions::new()
+        .append(true)
+        .open("/tmp/foo")
+        .expect("Unable to open file");
+    let mut f = BufWriter::new(f);
+    f.write_all(data.as_bytes()).expect("Unable to write data");
+}
+
+---------8<--------------------------
+
+https://users.rust-lang.org/t/slow-postgres-copy-using-buffer/59936/6
+
+let mut reader = client.copy_out(copy_out_query.as_str()).unwrap();
+
+    let mut buffer = vec!();
+    let mut total_rows = 0;
+    // Keep reading from source until reader is empty
+    loop {
+        let row = reader.fill_buf().unwrap();
+        let row_bytes = row.len();
+
+        // If we've reached EOF, end now, writing remaining rows
+        if row_bytes == 0 {
+            if buffer.len() > 0 {
+                // Do some stuff with remaining rows
+            }
+            break;
+        }
+
+        buffer.extend(row);
+        total_rows = total_rows + 1;
+
+        if total_rows % 50000 == 0 {
+            // Do some stuff with last 50K rows
+            buffer = vec!();
+        }
+
+        // ensure the bytes we worked with aren't returned again later
+        reader.consume(row_bytes);
+    }
+
+
+---------8<--------------------------
+
+crate:: is equivalent to root "/" and super:: is the parent module like ".."
+
+---------8<--------------------------
+
+Property                    &T      &mut T  &Cell<T>
+You can read                Yes     Yes     Yes
+You can write               No      Yes     Yes
+Others can read             Yes     No      Yes
+Others can write            No      No      Yes
+How many active references? Many    One     Many
+References in other threads Yes     No      No
+Allows projection           Yes     Yes     Sometimes
+
+---------8<--------------------------
+
+// https://stackoverflow.com/questions/32552593/is-it-possible-for-one-struct-to-extend-an-existing-struct-keeping-all-the-fiel
+
+struct StructA;
+
+impl StructA {
+    fn name(&self) -> &'static str {
+        "Anna"
+    }
+}
+
+struct StructB {
+    a: StructA,
+    // other fields...
+}
+
+// eğer bu olmazsa
+// no method named `name` found for struct `StructB` in the current scope
+// hatası oluyor
+impl std::ops::Deref for StructB {
+    type Target = StructA;
+    fn deref(&self) -> &Self::Target {
+        &self.a
+    }
+}
+
+fn main() {
+    let b = StructB { a: StructA };
+    println!("{}", b.name());
+}
+
+---------8<--------------------------
+
+.env dosyasındaki değerleri env olarak okumak
+
+dotenv::dotenv().expect("Failed to read .env file");
+
+let database = Database {
+    url: std::env::var("DATABASE_URL").unwrap_or(String::from("test.db")),
+};
+
+---------8<--------------------------
+
+array tipi tanımlanırken,
+
+let array = [1u8, 2, 3];
+
+şeklinde birinci elemana tip verdiğimizde, arrayın tipinide belirlemiş oluyoruz
+
+---------8<--------------------------
+
+// crate::model::file::File
+// kullanmak yerine
+// crate::model::File
+// şeklinde kullanmak için
+// mod.rs dosyasında
+pub use file::File;
+
+---------8<--------------------------
+
+array oluşturma
+
+//Syntax1
+let variable_name = [value1,value2,value3];
+
+//Syntax2
+let variable_name:[dataType;size] = [value1,value2,value3];
+
+//Syntax3
+let variable_name:[dataType;size] = [default_value_for_elements,size];
+
+------8<--------------------------------
+
+let arr: [[u8; 4]; 2] = [[1,2,3,4],[1,2,3,4]];
+1,2,3,4
+1,2,3,4
+
+let arr: [[u8; 2]; 4] = [[1,2],[3,4],[1,2],[3,4]];
+1,2
+3,4
+1,2
+3,4
+
+---------8<--------------------------
+
+TODO: örnek yaz
+
+use std::env;
+use std::fs::File;
+use std::io::BufRead;
+use std::io::BufReader;
+
+fn read_grid() -> [[usize; N]; N] {
+    let file_name = env::args().nth(1).expect("Please supply a filename");
+    let file = File::open(&file_name).expect("Can't open the file");
+    let reader = BufReader::new(file);
+
+    let mut grid = [[0usize; N]; N];
+
+    for (i, line) in reader.lines().enumerate() {
+        let line = line.unwrap();
+        let sira: Vec<usize> = line
+            .split(',')
+            .map(|ch| ch.parse::<usize>().unwrap())
+            .collect();
+        if sira.len() != N {
+            panic!("Every line must be 9 chars");
+        }
+
+        for j in 0..N {
+            grid[i][j] = sira[j];
+        }
+    }
+
+    grid
+}
+
+---------8<--------------------------
+
+projede
+tokio_postgres yerine pg kullanmak için
+
+Cargo.toml dosyasında
+pg adlı tokio-postgres'in bir aliasını oluşturuyoruz,
+
+#tokio-postgres = {version = "0.7", features = ["with-chrono-0_4","with-serde_json-1"]}
+pg = {package="tokio-postgres", version = "0.7", features = ["with-chrono-0_4"]}
+
+artık projede
+use tokio_postgres::NoTls;
+yerine
+use pg::NoTls;
+
+kullanabiliriz
+
+---------8<--------------------------
+
+include_bytes!
+
+ile resim vs binary data'yı include edebiliriz
+
+---------8<--------------------------
+
+basename = Path::new("abc.txt").file_stem().unwrap(); -> abc
+extension = Path::new("abc.txt").extension().unwrap(); -> txt
+
+---------8<--------------------------
+
+byte array yada vec'ten String oluşturmak için
+String::from_utf8_lossy
+
+---------8<--------------------------
+
+pub mod de {
+    pub use quick_xml::de::*;
+}
+
+başka bir paketi kendi mod.rs'imizden export ediyoruz
+
+---------8<--------------------------
+
+let v: Vec<bool> = Vec::new();
+println!("{:?}", v);
+
+
+let v = Vec::<bool>::new();
+println!("{:?}", v);
+
+vec'e tip vermek
+
+---------8<--------------------------
+
+istersek src klasörünün adını değiştirebiliriz
+
+Cargo.toml
+```
+[[bin]]
+name = "main"
+path = "module/main.rs"
+```
+
+src yerine module klasörü kullanıldı
+
+---------8<--------------------------
+
+?Sized. This means "maybe Sized, but maybe not"
+
+---------8<--------------------------
+
+bir metodun prototipini yazıp, gövdesini sonraya bırakabilmemizi sağlıyor,
+
+todo!() is actually the same as another macro: unimplemented!(). Programmers were using unimplemented!() a lot but it was long to type, so they created todo!() which is shorter.
+
+---------8<--------------------------
+
+ToOwned
+we can't "clone" a &str into a String, or a &Path into a PathBuf, or an &OsStr into an OsString, since the clone method signature doesn't support this kind of cross-type cloning, and that's what ToOwned was made for.
+
+---------8<--------------------------
+
+an array's sort() method needs a &mut self.
+However, we don't have to worry about that when writing code like this:
+
+fn main() {
+  let mut numbers = [3, 1, 2];
+  numbers.sort();
+}
+
+The .-operator will implicitly borrow a reference to its left operand. This means, the .sort() call is the equivalent of:
+
+(&mut numbers).sort();
+
+---------8<--------------------------
+
+collecting an Iterator<Item = char> into a String:
+
+fn filter_letters(string: &str) -> String {
+    string.chars().filter(|c| c.is_alphabetic()).collect()
+}
+
+---------8<--------------------------
+
+Option is if you are thinking: "Maybe there will be something, and maybe there won't." But Result is if you are thinking: "Maybe it will fail."
+
+---------8<--------------------------
+
+let ref x = 1;
+
+is identical to:
+
+let x = &1;
+
+And:
+
+let &x = &1;
+
+is identical to:
+
+let x = 1
+
+---------8<--------------------------
+
+varsayılan allocator'u değiştirmek
+
+use std::alloc::System;
+
+#[global_allocator]
+static A: System = System;
+
+ör:
+
+extern crate wee_alloc;
+
+// Use `wee_alloc` as the global allocator.
+#[global_allocator]
+static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
+
+pub fn leak_test() {
+    // This leaks when using wee_alloc
+    let a = Box::new([0; 85196]);
+    let b = Box::new([0; 80000]);
+    drop(a);
+    drop(b);
+}
+
+fn main() {
+    loop {
+        leak_test();
+    }
+}
+
+---------8<--------------------------
+
+By default, Cargo specifies 16 parallel codegen units for release builds. This improves compile times, but prevents some optimizations.
+yeni sürümlerde ne durumda?
+
+[profile.release]
+codegen-units = 1
+
+---------8<--------------------------
+
+let r = o.ok_or(expensive()); // always evaluates `expensive()`
+
+should be changed to this:
+
+let r = o.ok_or_else(|| expensive()); // evaluates `expensive()` only when needed
+
+---------8<--------------------------
+
+cargo run'ı parametre ile kullanmak için
+
+cargo run --release -- ARG
+
+cargo run --release -- dosya.txt
+
+---------8<--------------------------
+
+tokio-postgres
+
+prepare_typed için örnekler
+
+let connection = self.pool.get().await?;
+let stmt = connection
+    .prepare_typed("SELECT * FROM jobs WHERE jobid = $1", &[Type::INT4])
+    .await?;
+let row = connection.query_opt(&stmt, &[&id]).await?;
+
+
+let connection = self.pool.get().await?;
+let stmt = connection
+    .prepare_typed(
+        "INSERT INTO jobs (uid, fid, state) VALUES($1,$2,$3) RETURNING *",
+        &[Type::INT4, Type::INT4, Type::INT4],
+    )
+    .await?;
+let row = connection
+    .query_opt(&stmt, &[&job.user_id, &job.file_id, &DEFAULT_START_STATE])
+    .await?;
+
+match row {
+    Some(row) => PrintJob::try_from(row),
+    None => {
+        warn!("insert failed for uid {}", job.user_id);
+        Err(PrintJobError::DatabaseError("Insert failed".to_string()))
+    }
+}
+
+---------8<--------------------------
+
+global değişken için (lazy_static yerine)
+
+use std::{env, io};
+
+use once_cell::sync::OnceCell;
+
+#[derive(Debug)]
+pub struct Logger {
+    // ...
+}
+static INSTANCE: OnceCell<Logger> = OnceCell::new();
+
+impl Logger {
+    pub fn global() -> &'static Logger {
+        INSTANCE.get().expect("logger is not initialized")
+    }
+
+    fn from_cli(args: env::Args) -> Result<Logger, std::io::Error> {
+       // ...
+    }
+}
+
+fn main() {
+    let logger = Logger::from_cli(env::args()).unwrap();
+    INSTANCE.set(logger).unwrap();
+    // use `Logger::global()` from now on
+}
+
+---------8<--------------------------
+
+libc'de ptr çevirimi
+
+let mut cpus: libc::c_uint = 0;
+let mut cpus_size = std::mem::size_of_val(&cpus);
+
+let mut mib = [libc::CTL_HW, libc::HW_NCPU, 0, 0];
+unsafe {
+    libc::sysctl(mib.as_mut_ptr(),
+                 2,
+                 &mut cpus as *mut _ as *mut _,
+                 &mut cpus_size as *mut _ as *mut _,
+                 std::ptr::null_mut(),
+                 0);
+}
+
+---------8<--------------------------
+
+FreeBSD'de çalışır
+
+fn get_num_cpus() -> usize {
+    use std::ptr;
+    let mut cpus: libc::c_uint = 0;
+    let mut cpus_size = std::mem::size_of_val(&cpus);
+
+    let mut mib = [libc::CTL_HW, libc::HW_NCPU, 0, 0];
+    // int sysctl(const int *name, u_int namelen, void *oldp, size_t *oldlenp, const void *newp, size_t newlen);
+    /* ikiside aynı işi yapıyor
+    unsafe {
+        libc::sysctl(mib.as_mut_ptr(),
+                     2,
+                     &mut cpus as *mut _ as *mut _,
+                     &mut cpus_size as *mut _ as *mut _,
+                     ptr::null_mut(),
+                     0);
+    }*/
+    unsafe {
+        libc::sysctl(
+            mib.as_mut_ptr(),
+            2,
+            &mut cpus as *mut libc::c_uint as *mut libc::c_void,
+            &mut cpus_size as *mut usize as *mut libc::size_t,
+            ptr::null_mut(),
+            0,
+        );
+    }
+
+    if cpus < 1 {
+        cpus = 1;
+    }
+    cpus as usize
+}
+
+---------8<--------------------------
+
+extern crate libc;
+extern {
+    fn c_func(x: *mut *mut libc::c_void);
+}
+
+fn main() {
+    let x = 0 as *mut u8;
+    c_func(&mut (x as *mut libc::c_void));
+    println!("new pointer is {}", x);
+}
+
+The code should be written something like
+(&mut x) as *mut _ as *mut *mut libc::c_void.
+
+---------8<--------------------------
+
+async { /* body */ }
+
+// is equivalent to
+
+(async || { /* body */ })()
+
+---------8<--------------------------
+
+Supertraits are not inheritance! Supertraits are a constraint that if some trait is implemented, some other trait must also be implemented.
+
+---------8<--------------------------
+
+trait Summary {
+    fn summarize(&self) -> String;
+}
+
+fn summary(s: &impl Summary) {
+    s.summarize();
+}
+
+fn summary<T: Summary>(s: &T) {
+    s.summarize();
+}
+
+
+TODO: bunların farkı
+
+---------8<--------------------------
+
+for x in c {} — Syntactic sugar, calls c.into_iter() and loops i until None.
+
+---------8<--------------------------
+
+struct Person1;
+
+ile
+
+struct Person1{};
+
+ikiside aynı
+
+oluştururken'de
+
+let p1 = Person;
+
+ile
+
+let p1 = Person{};
+
+ikiside aynı
+
+---------8<--------------------------
+
+TODO: örneklendir
+
+https://blog.thomasheartman.com/posts/on-generics-and-associated-types
+
+Rust has a cool feature for generic types where you can set the default type, which will be assumed if no type is specified. This can be useful if, for most use cases, you want to use a specific type, but want to be able to override it sometimes. See the section on default generic types in the Book for more information.
+
+
+// basic trait, no constraint
+trait Generic<T = String> {
+    // ...
+}
+
+// with constraint
+trait Generic<T: Display = String> {
+    // ...
+}
+
+// or using the `where` clause
+trait Generic<T = String>
+where
+    T: Display,
+{
+    // ...
+}
+
+---------8<--------------------------
+
+pub enum Number {
+    Defined(f32),
+    Undefined,
+}
+
+Don't do this! No! That's what Option<f32> is for
+
+---------8<--------------------------
+
+#[path = "common/boilerplate.rs"]
+mod boilerplate;
+
+şeklinde bir modüle farklı bir path verilebiliyor
+
+https://github.com/servo/webrender/blob/master/examples/basic.rs
+
+---------8<--------------------------
+
+if let Some(pos) = ctx.input().pointer.hover_pos() {
+    // Using 'ctx' again here will lead to a dead-lock!
+}
+
+if let Some(pos) = { ctx.input().pointer.hover_pos() } {
+    // This is fine!
+}
+
+let pos = ctx.input().pointer.hover_pos();
+if let Some(pos) = pos {
+    // This is fine!
+}
+
+---------8<--------------------------
+
+TODO: örneklendir
+
+{
+    "squadName": "X",
+    "homeTown": "Y",
+    "formed": 1234,
+    "secretBase": "K",
+    "active": true,
+    "members": [
+        {
+            "name": "J",
+            "age": 45,
+            "secretIdentity": "DFGFGH",
+            "powers": [
+                "H",
+                "P",
+                "U"
+            ]
+        }
+    ]
+}
+
+->
+
+use serde::{Deserialize, Serialize};
+
+#[derive(Serialize, Deserialize)]
+struct Member {
+    pub name: String,
+    pub age: i64,
+    #[serde(rename = "secretIdentity")]
+    pub secret_identity: String,
+    pub powers: Vec<String>,
+}
+
+#[Serialize, Deserialize]
+struct Root {
+    #[serde(rename = "squadName")]
+    pub squad_name: String,
+    #[serde(rename = "homeTown")]
+    pub home_town: String,
+    pub formed: i64,
+    #[serde(rename = "secretBase")]
+    pub secret_base: String,
+    pub active: bool,
+    pub members: Vec<Member>,
+}
+
+---------8<--------------------------
+
+TODO: örneklendir
+
+https://github.com/sfackler/rust-postgres/issues/924
+
+postgresql tls'li örnek
+
+let cert = fs::read("global-bundle.pem")?;
+println!("file read");
+let cert = Certificate::from_pem(&cert)?;
+println!("cert created");
+
+let connector = TlsConnector::builder()
+        .add_root_certificate(cert)
+        .build()?;
+println!("connector built");
+let connector = MakeTlsConnector::new(connector);
+println!("connector created");
+
+let connect_result = tokio_postgres::connect(
+        "host=#####.us-west-2.rds.amazonaws.com port=5432 user=### password=### dbname=### connect_timeout=10",
+        connector,
+).await;
+println!("connection finished");
+
+if connect_result.is_err() {
+        let error_msg = connect_result.err().unwrap().to_string();
+        println!("Error: {}", error_msg);
+        return Ok(json!({ "error": error_msg }))
+}
+
+let (client, _connection) = connect_result.unwrap();
+println!("connection unwrapped");
+println!("Client closed: {}", client.is_closed());
+
+let db_response = client.query_one("SELECT name FROM workspaces WHERE id = 760", &[]);
+println!("query sent");
+let db_response = db_response.await;
+println!("query finished");
+
+---------8<--------------------------
+
+turbofish,
+fonksiyon yada struct'ta kaç adet generic parametre varsa ::<>'da o kadar parametre olmalı
+
+iki adet parametre olduğu için biz tipi
+let id = row.get::<usize,i32>(0);
+yada rowindex'i 0 olarak verdiğimiz için
+let id = row.get::<_,i32>(0);
+şeklinde tip vermeden kullanabiliriz,
+
+yada rowindex, usize ve str için impl edilmiş
+
+let id = row.get::<&str,i32>("id");
+
+burada get'e verdiğimiz parametrenin tipi ile ::<X,...> X'in tipi aynı olmalı
+
+
+https://docs.rs/tokio-postgres/0.7.6/tokio_postgres/row/struct.Row.html
+
+pub fn get<'a, I, T>(&'a self, idx: I) -> T where
+    I: RowIndex + Display,
+    T: FromSql<'a>,
+
+->
+
+let rows = client.query("select * from tbltest", &[]).await?;
+
+for row in rows {
+    // bu ikisi aynı
+    let id = row.get::<_,i32>(0);
+    let id: i32 = row.get(0);
+
+    let adi: String = row.get(1);
+    let soyadi: String = row.get(2);
+
+    println!("{}-{}-{}", id , adi , soyadi);
+}
+
+
+---------8<--------------------------
+
+TODO: örneklendir
+
+//main.rs
+mod mys;
+mod myt;
+
+// bu olmadan çalışmıyor
+// item from traits can only be used if the trait is implemented and in scope
+use crate::myt::MyT;
+
+fn main() {
+    let s = mys::MyS;
+    s.from_own();
+
+// yukarıdaki use Trait ile bu metodu çağırabiliyoruz
+    s.from_trait();
+}
+
+// myt.rs
+pub trait MyT {
+    fn from_trait(&self);
+}
+
+// mys.rs
+pub struct MyS;
+
+impl MyS {
+    pub fn from_own(&self) {
+        println!("impl S");
+    }
+}
+
+impl crate::myt::MyT for MyS {
+    fn from_trait(&self) {
+        println!("impl T for S");
+    }
+}
+
+---------8<--------------------------
+
+fn main() {
+    let even_numbers = vec![1, 2, 3, 4, 5]
+        .iter()
+        .filter(|&element| element % 2 == 0);
+}
+
+
+fn main() {
+    let even_numbers: Vec<i64> = vec![1, 2, 3, 4, 5]
+        .into_iter()
+        .filter(|element| element % 2 == 0).collect();
+}
+
+I'm using the type hint Vec<i64> here because, without it, Rust does not know what collection I want to build when calling collect.
+
+Instead of iter, I use into_iter. This way, I take ownership of the elements in the vector. With iter() I would get a Vec<&i64> instead.
+
+
+In Rust, there is no even method on numbers, but that doesn't keep us from defining one!
+
+let even = |x: &i64| x % 2 == 0;
+let even_numbers = vec![1, 2, 3, 4, 5].into_iter().filter(even);
+
+
+extern crate num;
+use num::Integer;
+
+fn main() {
+    let even_numbers: Vec<i64> = vec![1, 2, 3, 4, 5]
+        .into_iter()
+        .filter(|x| x.is_even()).collect();
+}
+
+
+---------8<--------------------------

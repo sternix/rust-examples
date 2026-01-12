@@ -1,0 +1,76 @@
+An iterator is an object with a next method which returns an Option. As long as that value is not None
+
+---------8<--------------------------
+
+rust dilinde iterator demek herhangi bir veri tipinin Iterator trait'ini implemente etmesidir,
+
+sonuç olarak herhangi bir veri tipi Iterator'u implemente ettikten sonra Iterator'un tüm metodlarını kullanabilir.
+
+---------8<--------------------------
+
+Adapters
+
+Adapters take an iterator and return another iterator
+
+//         Iterator  Adapter
+//             |       |
+let my_map = (1..6).map(|x| x * x);
+println!("{:?}", my_map);
+
+Output
+
+Map { iter: 1..6 }
+
+Note that the values were not enumerated, which indicates that iterators are not eagerly evaluated — iterators are "lazy".
+
+Bir iterator alıp sonuçta başka bir iterator döndüren metodlara Adapter deniliyor.
+
+---------8<--------------------------
+
+Consumers
+
+Consumers take an iterator and return something other than an iterator, consuming the iterator in the process.
+
+//                    Iterator  Adapter       Consumer
+//                        |       |              |
+let my_squares: Vec<_> = (1..6).map(|x| x * x).collect();
+println!("{:?}", my_squares);
+
+Output
+
+[1, 4, 9, 16, 25]
+
+Other examples of consumers include find, fold, and sum.
+
+let my_squared_sum: u32 = (1..6).map(|x| x * x).sum();
+println!("{:?}", my_squared_sum);
+
+Output
+55
+
+---------8<--------------------------
+
+adapter iterator alıp iterator döndürüyor
+consumer iterator alıp bir değer döndürüyor
+
+---------8<--------------------------
+
+iter() = gives an iterator over &T(reference to T)
+into_iter() = gives an iterator over T
+iter_mut() = gives an iterator over &mut T
+
+---------8<--------------------------
+
+let mut result: Vec<IpAddr> = vec![];
+
+for ip_address in ip_addresses.into_iter() {
+    result.push(IpAddr::V4(ip_address.addr()));
+}
+
+yerine
+
+let result: Vec<IpAddr> = ip_addresses.into_iter()
+    .map(|ip_address| IpAddr::V4(ip_address.addr()))
+    .collect();
+
+---------8<--------------------------
