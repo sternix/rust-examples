@@ -2355,3 +2355,175 @@ fn foo() -> impl Future<Output = usize> { async { /**/ } }
 const EXAMPLES_DIR: &str = concat![env!("CARGO_MANIFEST_DIR"), "/examples"];
 
 ---------8<--------------------------
+
+always && will happen before ||
+
+---------8<--------------------------
+
+https://evilpiepirate.org/git/bcachefs-tools.git/tree/rust-src/rustfmt.toml?id=1331759db5f90664142f561a258372eebe47c4a6
+
+rustfmt.toml
+=BEGIN
+# Default settings, i.e. idiomatic rust
+edition = "2021"
+newline_style = "Unix"
+=END
+
+---------8<--------------------------
+
+https://stackoverflow.com/questions/75848399/how-to-efficiently-use-actix-multipart-to-upload-a-single-file-to-disk
+
+#[derive(MultipartForm)]
+pub struct Upload {
+    file: TempFile,
+}
+
+#[put("/file")]
+pub async fn put_file(
+    config: web::Data<Config>, form: MultipartForm<Upload>) -> impl Responder {
+    const MAX_FILE_SIZE: u64 = 1024 * 1024 * 10; // 10 MB
+    const MAX_FILE_COUNT: i32 = 1;
+
+    // reject malformed requests
+    match form.file.size {
+        0 => return HttpResponse::BadRequest().finish(),
+        length if length > MAX_FILE_SIZE.try_into().unwrap() => {
+            return HttpResponse::BadRequest()
+                .body(format!("The uploaded file is too large. Maximum size is {} bytes.", MAX_FILE_SIZE));
+        },
+        _ => {}
+    };
+
+    let temp_file_path = form.file.file.path();
+    let file_name: &str = form
+        .file
+        .file_name
+        .as_ref()
+        .map(|m| m.as_ref())
+        .unwrap_or("null");
+
+    let mut file_path = PathBuf::from(&config.data_path);
+    file_path.push(&sanitize_filename::sanitize(&file_name));
+
+    match std::fs::rename(temp_file_path, file_path) {
+        Ok(_) => HttpResponse::Ok().finish(),
+        Err(_) => HttpResponse::InternalServerError().finish(),
+    }
+}
+
+
+---------8<--------------------------
+
+mutex içeriği kitliyor, sadece kilit elinde olan içeriğe erişebiliyor
+semaphore bir içeriğe sadece izin verildiği kadar threadin erişmesine izin veriyor
+
+---------8<--------------------------
+
+async Pin ve Context
+
+The .await keyword, applied to a Future, causes the current async function to pause until that Future is ready, and then evaluates to its output.
+
+Context allows a Future to schedule itself to be polled again when an event occurs.
+
+Pin ensures that the Future isn’t moved in memory, so that pointers into that future remain valid. This is required to allow references to remain valid after an .await.
+
+Futures are “inert” in that they do not do anything (not even start an I/O operation) unless there is an executor polling them. This differs from JS Promises, for example, which will run to completion even if they are never used.
+
+
+---------8<--------------------------
+
+cargo add axum-extra@0.9.2 -F typed-header
+cargo add chrono@0.4.34 -F serde,clock
+cargo add jsonwebtoken@9.2.0
+cargo add once_cell@1.19.0
+cargo add serde@1.0.196 -F derive
+cargo add serde-json@1.0.113
+
+---------8<--------------------------
+
+struct Container<'a>(&'a str);
+
+// Metodun 'self' referansının ömrünü kullanmasını istediğimizde '_' kullanabiliriz.
+impl Container<'_> {
+    fn get_value(&self) -> &str {
+         self.0
+    }
+}
+// Yukarıdaki aslında şuna denktir (elision kuralları sayesinde):
+// impl<'a> Container<'a> {
+//     fn get_value(&self) -> &'a str { // veya fn get_value<'b>(&'b self) -> &'b str { ... }
+//          self.0                    // (Burada elision kuralları devreye girer)
+//     }
+// }
+
+---------8<--------------------------
+
+örnek
+cargo install'ı github'dan source'ı alıp derleyebileceği şekilde çalıştırabiliriz
+cargo install --git https://github.com/rustformers/llm llm-cli
+
+---------8<--------------------------
+
+let mut v = vec![1973, 1968];
+
+v.sort();           // implicitly borrows a mutable reference to v
+
+(&mut v).sort();    // equivalent, but more verbose
+
+println!("{v:?}");
+
+with the exception of the . operator, which borrows and dereferences implicitly.
+
+---------8<--------------------------
+
+Rust’s equivalent of a global variable is called a static: it’s a value that’s created when the program starts and lasts until it terminates.
+
+---------8<--------------------------
+
+https://github.com/rust-lang/rust/blob/main/tests/ui/parser/bastion-of-the-turbofish.rs
+
+bu kodda string compare yapılıyor
+uzaktan sanki fonksiyon çağrılıyor gibi
+
+fn main() {
+    let (the, guardian, stands, resolute) = ("the", "Turbofish", "remains", "undefeated");
+    let _: (bool, bool) = (the<guardian, stands>(resolute));
+}
+
+---------8<--------------------------
+
+https://rust-exercises.com/100-exercises/03_ticket_v1/10_references_in_memory.html
+
+let s = String::from("Hey");
+let r = &s;
+
+
+           --------------------------------------
+           |                                    |
+      +----v----+--------+----------+      +----|----+
+Stack | pointer | length | capacity |      | pointer |
+      |  |      |   3    |    5     |      |         |
+      +--|  ----+--------+----------+      +---------+
+         |          s                           r
+         |
+         v
+       +---+---+---+---+---+
+Heap   | H | e | y | ? | ? |
+       +---+---+---+---+---+
+
+
+görülebileceği gibi stack'taki referans stack'taki alanı gösteriyor
+
+The example above should clarify one thing: not all pointers point to the heap.
+They just point to a memory location, which may be on the heap, but doesn't have to be.
+
+---------8<--------------------------
+
+kompleks use ifadesi
+
+use std::{
+    fs::File,
+    io::{Error, Read},
+};
+
+---------8<--------------------------
