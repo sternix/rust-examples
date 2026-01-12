@@ -2151,3 +2151,93 @@ fn main() {
 
 
 ---------8<--------------------------
+
+hem lib hem binary içeren proje
+
+https://stackoverflow.com/questions/26946646/package-with-both-a-library-and-a-binary
+
+Cargo.toml
+=BEGIN
+[package]
+name = "mything"
+version = "0.0.1"
+authors = ["me <me@gmail.com>"]
+
+[lib]
+name = "mylib" # bu ismi bin.rs'de use için kullanıyoruz
+path = "src/lib.rs"
+
+[[bin]]
+name = "mybin"
+path = "src/bin.rs"
+=END
+
+
+src/lib.rs
+=BEGIN
+pub fn test() {
+    println!("Test");
+}
+=END
+
+src/bin.rs
+=BEGIN
+use mylib::test;
+
+fn main() {
+    test();
+}
+=END
+
+main.rs dosyasını sil
+
+---------8<--------------------------
+
+cargo test'de println ile ekrana yazdırma
+
+cargo test -- --nocapture
+
+bunu dene
+cargo test -- --show-output
+
+---------8<--------------------------
+
+TODO: örneklendir
+
+str.trim_matches(|c| c == '[' || c == ']')
+içinde [ veya ] geçen tüm karakterleri sil
+
+---------8<--------------------------
+
+The Pin type wraps pointer types, guaranteeing that the values behind the pointer won't be moved if it is not implementing Unpin. For example, Pin<&mut T>, Pin<&T>, Pin<Box<T>> all guarantee that T won't be moved if T: !Unpin.
+
+---------8<--------------------------
+
+First, the compiler transforms async code blocks into 'future' structures, and second, a "runtime" is required to run a future object and make progress.
+
+Asynchronous Rust code does not run without a runtime, and Tokio is the most widely used async runtime in the Rust ecosystem.
+
+Rust futures are very different from Goroutines or threads. Instead of each future mapping to a thread, Tokio runs a set of threads that poll and advance futures until they complete. Calling an async function does not execute code, but rather creates a future that needs to be given to the Tokio runtime for execution.
+
+---------8<--------------------------
+
+Send and Sync are also automatically derived traits. This means that, unlike every other trait, if a type is composed entirely of Send or Sync types, then it is Send or Sync. Almost all primitives are Send and Sync, and as a consequence pretty much all types you'll ever interact with are Send and Sync. Major exceptions include: [...] Rc isn't Send or Sync (because the refcount is shared and unsynchronized).
+
+---------8<--------------------------
+
+pub(in crate::http) fn to_jwt(&self, ctx: &ApiContext) -> String {
+
+---------8<--------------------------
+
+cargo test -- --ignored
+
+#[test]
+#[ignore]
+/// disallow first strand longer
+fn test_disallow_first_strand_longer() {
+    process_distance_case(["AATG", "AAA"], None);
+}
+
+ignore olanları varsayılan olarak dikkate almıyor,
+
+---------8<--------------------------
