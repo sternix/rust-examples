@@ -1,0 +1,164 @@
+https://medium.com/@TechSavvyScribe/rust-regex-10-practical-examples-ec11527b8b84
+
+sadece rakam içeren ifadeler
+```
+[0-9]
+(?-u:\d)
+[[:digit:]]
+[\d&&\p{ascii}]
+```
+
+tarih formatı
+4 tane rakam - 2 tane rakam - 2 tane rakam
+
+[0-9]{4}-[0-9]{2}-[0-9]{2}
+
+---------8<--------------------------
+
+Matching one character
+
+.             any character except new line (includes new line with s flag)
+[0-9]         any ASCII digit
+\d            digit (\p{Nd})
+\D            not digit
+\pX           Unicode character class identified by a one-letter name
+\p{Greek}     Unicode character class (general category or script)
+\PX           Negated Unicode character class identified by a one-letter name
+\P{Greek}     negated Unicode character class (general category or script)
+
+---------8<--------------------------
+Character classes
+
+[xyz]         A character class matching either x, y or z (union).
+[^xyz]        A character class matching any character except x, y and z.
+[a-z]         A character class matching any character in range a-z.
+[[:alpha:]]   ASCII character class ([A-Za-z])
+[[:^alpha:]]  Negated ASCII character class ([^A-Za-z])
+[x[^xyz]]     Nested/grouping character class (matching any character except y and z)
+[a-y&&xyz]    Intersection (matching x or y)
+[0-9&&[^4]]   Subtraction using intersection and negation (matching 0-9 except 4)
+[0-9--4]      Direct subtraction (matching 0-9 except 4)
+[a-g~~b-h]    Symmetric difference (matching `a` and `h` only)
+[\[\]]        Escaping in character classes (matching [ or ])
+[a&&b]        An empty character class matching nothing
+
+---------8<--------------------------
+
+Ranges: [a-cd] == [[a-c]d]
+Union: [ab&&bc] == [[ab]&&[bc]]
+Intersection, difference, symmetric difference. All three have equivalent precedence, and are evaluated in left-to-right order. For example, [\pL--\p{Greek}&&\p{Uppercase}] == [[\pL--\p{Greek}]&&\p{Uppercase}].
+Negation: [^a-z&&b] == [^[a-z&&b]].
+
+---------8<--------------------------
+
+xy    concatenation (x followed by y)
+x|y   alternation (x or y, prefer x)
+
+---------8<--------------------------
+
+x*        zero or more of x (greedy)
+x+        one or more of x (greedy)
+x?        zero or one of x (greedy)
+x*?       zero or more of x (ungreedy/lazy)
+x+?       one or more of x (ungreedy/lazy)
+x??       zero or one of x (ungreedy/lazy)
+x{n,m}    at least n x and at most m x (greedy)
+x{n,}     at least n x (greedy)
+x{n}      exactly n x
+x{n,m}?   at least n x and at most m x (ungreedy/lazy)
+x{n,}?    at least n x (ungreedy/lazy)
+x{n}?     exactly n x
+
+---------8<--------------------------
+
+^               the beginning of a haystack (or start-of-line with multi-line mode)
+$               the end of a haystack (or end-of-line with multi-line mode)
+\A              only the beginning of a haystack (even with multi-line mode enabled)
+\z              only the end of a haystack (even with multi-line mode enabled)
+\b              a Unicode word boundary (\w on one side and \W, \A, or \z on other)
+\B              not a Unicode word boundary
+\b{start}, \<   a Unicode start-of-word boundary (\W|\A on the left, \w on the right)
+\b{end}, \>     a Unicode end-of-word boundary (\w on the left, \W|\z on the right))
+\b{start-half}  half of a Unicode start-of-word boundary (\W|\A on the left)
+\b{end-half}    half of a Unicode end-of-word boundary (\W|\z on the right)
+
+---------8<--------------------------
+
+(exp)          numbered capture group (indexed by opening parenthesis)
+(?P<name>exp)  named (also numbered) capture group (names must be alpha-numeric)
+(?<name>exp)   named (also numbered) capture group (names must be alpha-numeric)
+(?:exp)        non-capturing group
+(?flags)       set flags within current group
+(?flags:exp)   set flags for exp (non-capturing)
+
+---------8<--------------------------
+
+Flags are each a single character. For example, (?x) sets the flag x and (?-x) clears the flag x. Multiple flags can be set or cleared at the same time: (?xy) sets both the x and y flags and (?x-y) sets the x flag and clears the y flag.
+
+i     case-insensitive: letters match both upper and lower case
+m     multi-line mode: ^ and $ match begin/end of line
+s     allow . to match \n
+R     enables CRLF mode: when multi-line mode is enabled, \r\n is used
+U     swap the meaning of x* and x*?
+u     Unicode support (enabled by default)
+x     verbose mode, ignores whitespace and allow line comments (starting with `#`)
+
+---------8<--------------------------
+
+https://medium.com/coderhack-com/an-in-depth-guide-to-regex-in-rust-2158220607f2
+
+Anchors: ^ matches beginning of string, $ matches end of string.
+Dot: . matches any single character.
+Character Classes: [abc] matches a, b, or c.  [^abc] matches anything except a, b, c. [a-z] matches any letter.
+Repetition(Tekrarlama): , +, ? multiply the previous token. {n} repeats exactly n times. {n,m} repeats between n to m times.
+Alternation(alternatiflerden birisi): | matches either left or right pattern.
+Escaping(regex karakterlerini normal ifadelerde kullanmak için): \ escapes special characters like , ., $, etc.
+Grouping(Gruplama): (abc) groups multiple tokens together.
+Named Capture Groups: (?P...) defines a named capture group.
+
+// Anchors
+let re = Regex::new(r"^hello").unwrap(); // Must start with hello
+let re = Regex::new(r"hello$").unwrap(); // Must end with hello
+
+// Dot
+let re = Regex::new(r"h.llo").unwrap(); // Matches h+any char+llo
+
+// Character class
+let re = Regex::new(r"h[ae]llo").unwrap(); // Matches hallo or hello
+
+// Repetition
+let re = Regex::new(r"ha*").unwrap(); // h followed by 0 or more a
+let re = Regex::new(r"ha+").unwrap(); // h followed by 1 or more a
+let re = Regex::new(r"ha?").unwrap(); // h followed by 0 or 1 a
+
+// Grouping
+let re = Regex::new(r"(ha){3}").unwrap(); // ha ha ha
+
+email regex
+```
+let re = Regex::new(r"^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$").unwrap();
+assert!(re.is_match("hello@example.com"));
+assert!(!re.is_match("hello@example")); // Missing .com
+```
+
+url değerlendirme
+```
+let re = Regex::new(r"^https?://[a-z0-9-.]{2,}\.[a-z]{2,4}(:[0-9]{2,5})?/?.*$").unwrap();
+assert!(re.is_match("https://example.com"));
+assert!(!re.is_match("example.com")); // Missing https
+
+Extract Hashtags from Tweet
+```
+let text = "Hello #world! This is #awesome. #foo #bar";
+let re = Regex::new(r"#([a-z0-9_]+)").unwrap();
+for cap in re.captures_iter(text) {
+    println!("Hashtag: {}", &cap[1]);  // burada cap[1] alınmış, cap[0] #'li olarak geliyor
+}
+// Prints:
+// Hashtag: world
+// Hashtag: awesome
+// Hashtag: foo
+// Hashtag: bar
+```
+
+---------8<--------------------------
