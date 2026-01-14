@@ -17,7 +17,6 @@ fn main() {
     );
 }
 
-
 /*
 
 This question revolves around where the Rust grammar places statement boundaries.

@@ -20,7 +20,7 @@ fn main() {
 
     let bar = [1, 2, 3];
     let foos: Vec<_> = bar // <-- specify a type and use '_' to make the compiler, compiler tipini tahmin etsin
-        .iter() 
+        .iter()
         .map(|x| format!("{}", x))
         .collect(); // <-- no more turbofish
 

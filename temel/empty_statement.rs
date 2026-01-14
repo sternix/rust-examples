@@ -17,12 +17,12 @@ fn main() {
     loop {
         work();
         sleeping();
-/* rustfmt ile siliniyor
-        warning: unnecessary trailing semicolon
-  --> empty_statement.rs:20:9
-   |         ;
-   |         ^ help: remove this semicolon
-        ;
-        */
+        /* rustfmt ile siliniyor
+              warning: unnecessary trailing semicolon
+        --> empty_statement.rs:20:9
+         |         ;
+         |         ^ help: remove this semicolon
+              ;
+              */
     }
 }

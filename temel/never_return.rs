@@ -25,7 +25,7 @@ fn can_return() -> ! {
         }
     }
 }
-*/ 
+*/
 
 fn main() {
     // can_return();

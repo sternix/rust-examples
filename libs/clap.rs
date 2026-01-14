@@ -9,7 +9,7 @@ fn main() {
             .about("Runs the Foo Server")
             .arg(Arg::with_name("debug")
                 .short("D")
-                .about("Sends debug foos instead of normal foos.")))
+                .about("Sends debug foos instead of normal foos.")));
 
     // This parses the command-line arguments for use.
     let matches = app.get_matches();

@@ -1,8 +1,8 @@
 fn main() {
     let my_number = 65;
 
-//  only `u8` can be cast as `char`, not `i32`
-//  println!("{}", my_number as char);
+    //  only `u8` can be cast as `char`, not `i32`
+    //  println!("{}", my_number as char);
     println!("{}", my_number as u8 as char);
 }
 

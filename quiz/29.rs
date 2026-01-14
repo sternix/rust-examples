@@ -35,7 +35,6 @@ fn main() {
     (0, 0).p();
 }
 
-
 /*
 
 The trailing comma is required in the case of a 1-tuple, (0,), because it disambiguates it from (0) which is identical to 0. However, for larger tuples, it is entirely optional: (i32) is a distinct type from (i32,), but (i32, i32) and (i32, i32,) are the same.

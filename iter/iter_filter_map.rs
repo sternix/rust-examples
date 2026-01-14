@@ -16,7 +16,6 @@ fn main() {
         .filter_map(|i| i.parse::<u64>().ok())
         .collect();
     println!("{:?}", numbers);
-
 }
 
 /*

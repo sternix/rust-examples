@@ -24,6 +24,6 @@ fn triangle(n: i32) -> i32 {
 }
 
 fn main() {
-    println!("{}",triangle(3));
-    println!("{}",triangle_klasik(3));
+    println!("{}", triangle(3));
+    println!("{}", triangle_klasik(3));
 }

@@ -18,5 +18,4 @@ fn main() {
     assert_eq!(iterator.next(), Some(8));
     assert_eq!(iterator.next(), Some(6));
     assert_eq!(iterator.next(), None);
-
 }

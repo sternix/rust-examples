@@ -18,13 +18,11 @@ struct TypeB {
 
 impl From<TypeA> for TypeB {
     fn from(src: TypeA) -> Self {
-        TypeB {
-            _b: src.a,
-        }
+        TypeB { _b: src.a }
     }
 }
 
 fn main() {
-    let a = TypeA{a:28};
+    let a = TypeA { a: 28 };
     let _b: TypeB = a.into();
 }

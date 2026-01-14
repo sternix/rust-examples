@@ -29,7 +29,6 @@ fn main() {
     static_dispatch(BothTraits);
 }
 
-
 /*
 
 The two traits Base and Derived each define a trait method called method. These methods happen to have the same name but are otherwise unrelated methods as explained below.

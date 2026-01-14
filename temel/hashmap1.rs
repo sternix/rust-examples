@@ -14,7 +14,6 @@ fn main() {
     println!("{}", table.len());
 }
 
-
 /*
 Burada show fonksiyonuna shared referans yolladığımızda yani
 yani show(&table) şeklinde tanımladığımızda

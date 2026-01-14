@@ -10,7 +10,7 @@ serde = { version = "1.0", features = ["derive"] }
 use anyhow::Result;
 use serde::Deserialize;
 
-#[derive(Debug,Deserialize)]
+#[derive(Debug, Deserialize)]
 struct ClusterMap;
 
 fn main() -> Result<()> {

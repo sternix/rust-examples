@@ -7,5 +7,5 @@ fn main() {
     move_away(roa);
 
     // daha kullanamayız
-    //println!("{john}"); 
+    //println!("{john}");
 }

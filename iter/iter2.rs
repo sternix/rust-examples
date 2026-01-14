@@ -20,5 +20,5 @@ fn main() {
     // into_iter() value alıyor
 
     // yukarıda v.into_iter() yapılsa bu satır hata veriyor
-    println!("v yaşıyor, len: {}",v.len()); 
+    println!("v yaşıyor, len: {}", v.len());
 }

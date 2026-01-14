@@ -21,7 +21,9 @@ fn main() {
 
     assert_eq!(
         poem.split_whitespace().collect::<Vec<_>>(),
-        vec!["This", "is", "just", "to", "say", "I", "have", "eaten", "the", "plums", "again"]
+        vec![
+            "This", "is", "just", "to", "say", "I", "have", "eaten", "the", "plums", "again"
+        ]
     );
 
     assert_eq!("\t*.rs    ".trim(), "*.rs");
