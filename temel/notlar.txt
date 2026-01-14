@@ -2527,3 +2527,12 @@ use std::{
 };
 
 ---------8<--------------------------
+
+rustfmt ile formatlanmasını istemediğimiz bir fonksiyonu
+
+#[rustfmt::skip]
+fn test() {}
+
+ile belirtebiliriz 
+
+---------8<--------------------------
