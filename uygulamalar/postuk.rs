@@ -1,16 +1,16 @@
 /*
 
 [dependencies]
+anyhow = "1.0"
 clap = "4.5.54"
 lettre = "0.11.19"
-
 */
 
+use anyhow::Error;
 use clap::{Arg, ArgAction, Command};
 use lettre::message::header::ContentType;
 use lettre::transport::smtp::authentication::Credentials;
 use lettre::{Message, SmtpTransport, Transport};
-use std::error::Error;
 
 struct Mail {
     from: String,
@@ -22,7 +22,7 @@ struct Mail {
     server: String,
 }
 
-fn main() -> Result<(), Box<dyn Error>> {
+fn main() -> Result<(), Error> {
     let matches = Command::new("postuk")
         .version("0.1.0")
         .author("Yavuz Tanrıverdi")
@@ -90,7 +90,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-fn send_mail(mail: Mail) -> Result<(), Box<dyn Error>> {
+fn send_mail(mail: Mail) -> Result<(), Error> {
     let email = Message::builder()
         .from(mail.from.parse()?)
         .to(mail.to.parse()?)
