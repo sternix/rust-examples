@@ -1,12 +1,11 @@
 iterator
- yeni versiyonlarda iter() metoduna gerek yok
-
- https://dtolnay.github.io/rust-quiz/{1..37}
+yeni versiyonlarda iter() metoduna gerek yok
 
 regex
 
 ---------8<--------------------------
 
 https://eleftheriabatsou.hashnode.dev/tutorial-building-a-port-scanner-in-rust
+https://kerkour.com/rust-fast-port-scanner
 
 ---------8<--------------------------
