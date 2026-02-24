@@ -14,7 +14,7 @@ DB_POOL_SIZE = 10
 Cargo.toml
 ```
 [dependencies]
-dotenv = "0.15"
+dotenvy = "0.15"
 postgres = {version = "0.19", features = ["with-chrono-0_4"]}
 r2d2 = "0.8"
 r2d2_postgres = "0.18"
@@ -48,7 +48,7 @@ impl Env {
     }
 
     pub fn parse() -> Self {
-        dotenv::dotenv().ok(); // .env dosyasındaki parametreleri yüklüyor
+        dotenvy::dotenv().ok(); // .env dosyasındaki parametreleri yüklüyor
         // böylelikle std::env::var'dan env değişkeni olarak alabiliyoruz
 
         Self {
